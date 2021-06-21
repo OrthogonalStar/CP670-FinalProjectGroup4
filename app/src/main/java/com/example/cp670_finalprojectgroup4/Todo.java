@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class Todo {
     String title;
+    String description;
     String location;
     Date starttime;
-    Date duration;
+    int duration;
 }
