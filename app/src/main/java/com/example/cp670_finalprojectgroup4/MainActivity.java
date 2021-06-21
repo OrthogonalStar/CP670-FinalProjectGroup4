@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         todo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(new Intent(MainActivity.this, TodolistActivity.class));
+                Intent intent = new Intent(new Intent(MainActivity.this, TodolActivity.class));
                 startActivity(intent);
             }
         });
