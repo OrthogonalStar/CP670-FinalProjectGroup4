@@ -3,4 +3,15 @@
     <string name="todo_button_text">Todo</string>
     <string name="timer_button_text">Pomodoro Timer</string>
     <string name="trends_button_text">Activity Data</string>
+    <string name="login_txt_username">Username</string>
+    <string name="login_hint_username">Type user name here ...</string>
+    <string name="login_txt_pass">Password</string>
+    <string name="login_hint_pass">Type password here ...</string>
+    <string name="login_btn_login">Login</string>
+    <string name="todo_new_item_title">Type new item tile here ...</string>
+    <string name="todo_new_item_click">Add</string>
+    <string name="todo_item_title">Title</string>
+    <string name="todo_item_status">Status</string>
+
+
 </resources>
