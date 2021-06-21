@@ -3,14 +3,14 @@ Final Project Android application programming group #4
 
 
 Files (Please checkout files from here so we know what files each person is working on, just cross out the tasks below when they are complete. Please do not modify a file that someone else has checked out, and when you are done working for the day please commit the file, update the repo, and take your name off the file so that someone else can work on it if they want.)
-- MainActivity Java - Awstin
+- MainActivity Java
 - MainActivity Layout - Ma
 - LoginActivity Java - Avi
 - LoginActivity Layout - Avi
-- TodoActivity Java
+- TodoActivity Java - Ma
 - TodoActivity Layout - Ma
-- TimerActivity Java - Awstin
-- TimerActivity Layout - Awstin
+- TimerActivity Java
+- TimerActivity Layout
 - TrendsActivity Java
 - TrendsActivity Layout
 - TodoItem Layout
