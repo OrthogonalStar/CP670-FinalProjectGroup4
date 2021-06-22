@@ -7,5 +7,6 @@ public class Todo {
     String description;
     String location;
     Date starttime;
+    String username;
     int duration;
 }
