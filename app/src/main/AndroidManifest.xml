@@ -22,7 +22,9 @@
         <activity android:name=".TrendsActivity" />
         <activity android:name=".TodolActivity" />
         <activity android:name=".TimerActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity">
+
+        </activity>
     </application>
 
 </manifest>

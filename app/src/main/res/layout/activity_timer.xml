@@ -1,9 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:rowCount="3"
+    android:columnCount="3">
     tools:context=".TimerActivity">
 
-</LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="click_start"
+        android:text="@string/start_button"
+        android:layout_row="1"
+        android:layout_column="0"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="click_stop"
+        android:text="@string/stop_button"
+        android:layout_row="1"
+        android:layout_column="1"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="2"
+        android:onClick="click_reset"
+        android:text="@string/reset_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="five_min_timer"
+        android:text="@string/five_min"
+        android:layout_row="0"
+        android:layout_column="0"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="twentyfive_min_timer"
+        android:text="@string/twentyfive_min"
+        android:layout_row="0"
+        android:layout_column="2"
+        />
+
+    <TextClock
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="2"
+        android:layout_column="1"
+        android:textSize="20pt"
+        android:text="0:00"
+
+        />
+
+</GridLayout>
+
+
+
