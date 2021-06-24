@@ -9,8 +9,8 @@ Files (Please checkout files from here so we know what files each person is work
 - LoginActivity Layout - Avi
 - TodoActivity Java - Ma
 - TodoActivity Layout - Ma
-- TimerActivity Java  - 
-- TimerActivity Layout -
+- TimerActivity Java  - Tyler
+- TimerActivity Layout - Tyler
 - TrendsActivity Java
 - TrendsActivity Layout
 - TodoItem Layout
