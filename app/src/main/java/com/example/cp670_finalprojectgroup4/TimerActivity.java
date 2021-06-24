@@ -96,7 +96,7 @@ public class TimerActivity extends AppCompatActivity {
         timer=new CountDownTimer(length, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                ((TextView)findViewById(R.id.timer)).setText(millisUntilFinished/60000+":"+(millisUntilFinished%60000)/ 1000);
+                ((TextView)findViewById(R.id.timer)).setText(millisUntilFinished/60000+":"+String.format("%02d", (millisUntilFinished%60000)/ 1000));
                 time_left=(int)millisUntilFinished;
             }
 
