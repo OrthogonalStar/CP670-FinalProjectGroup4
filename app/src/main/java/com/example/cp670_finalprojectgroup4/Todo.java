@@ -1,5 +1,7 @@
 package com.example.cp670_finalprojectgroup4;
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 public class Todo {
@@ -9,4 +11,5 @@ public class Todo {
     Date starttime;
     String username;
     int duration;
+    Bitmap logo;
 }
