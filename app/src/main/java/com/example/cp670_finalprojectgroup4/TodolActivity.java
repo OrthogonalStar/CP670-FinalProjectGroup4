@@ -1,8 +1,11 @@
 package com.example.cp670_finalprojectgroup4;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -36,6 +41,35 @@ public class TodolActivity extends AppCompatActivity {
 
     public void onItemAdd(View v) {
         //Pop up a new dialog and submit to add an item here
+        showAddItemDialog();
+    }
+
+    void showAddItemDialog(){
+        AlertDialog.Builder customDialog =
+                new AlertDialog.Builder(this);
+        // Get the layout inflater
+        LayoutInflater inflater = getLayoutInflater();
+        final View view = inflater.inflate(R.layout.activity_add_to_do_dialog, null);
+        customDialog.setView(view)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Fetching values and insert to update the list adapter
+                        EditText edit = view.findViewById(R.id.editDesc);
+                        String message = edit.getText().toString();
+
+                        //Tested
+                        Snackbar.make(findViewById(R.id.TodoList), message, Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
+                    }
+                })
+                .setNegativeButton(R.string.todo_list_custom_dialog_cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+        Dialog dialog = customDialog.create();
+        dialog.show();
     }
 
     @Override
