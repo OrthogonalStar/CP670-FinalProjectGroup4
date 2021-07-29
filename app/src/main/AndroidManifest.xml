@@ -13,17 +13,17 @@
         android:theme="@style/Theme.CP670FinalProjectGroup4">
         <activity android:name=".RegisterUserActivity"></activity>
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".TrendsActivity" />
         <activity android:name=".TodolActivity" />
         <activity android:name=".TimerActivity" />
         <activity android:name=".MainActivity">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

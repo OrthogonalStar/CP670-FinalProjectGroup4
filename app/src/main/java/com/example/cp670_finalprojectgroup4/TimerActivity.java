@@ -16,6 +16,7 @@ public class TimerActivity extends AppCompatActivity {
     protected static final String ACTIVITY_NAME = "MainActivity";
     Button start, stop, reset;
     int timerlength;
+    int time_left;
     CountDownTimer timer;
     boolean running;
 
@@ -25,6 +26,7 @@ public class TimerActivity extends AppCompatActivity {
         running=false;
         Log.i(ACTIVITY_NAME, "In onCreate()");
         setContentView(R.layout.activity_timer);
+        ((TextView)findViewById(R.id.timer)).setText("0:00");
     }
 
     @Override
@@ -62,11 +64,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public void click_stop(View view) {
-        int time_left=0;
-        try {
-            time_left = parseInt(((TextView) findViewById(R.id.timer)).getText().toString());
-        } catch (NumberFormatException nfe){
-        }
         timer.cancel();
         create_timer(time_left);
 
@@ -74,12 +71,14 @@ public class TimerActivity extends AppCompatActivity {
 
     public void click_reset(View view) {
         timer.cancel();
+        ((TextView)findViewById(R.id.timer)).setText("0:00");
         running=false;
     }
 
 
     public void five_min_timer(View view) {
         if (!running){
+            time_left=300000;
             create_timer (300000);
             running=true;
         }
@@ -87,6 +86,7 @@ public class TimerActivity extends AppCompatActivity {
 
     public void twentyfive_min_timer(View view) {
         if (!running){
+            time_left=1500000;
             create_timer(1500000);
             running=true;
         }
@@ -96,11 +96,13 @@ public class TimerActivity extends AppCompatActivity {
         timer=new CountDownTimer(length, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                ((TextView)findViewById(R.id.timer)).setText(""+millisUntilFinished / 1000);
+                ((TextView)findViewById(R.id.timer)).setText(millisUntilFinished/60000+":"+String.format("%02d", (millisUntilFinished%60000)/ 1000));
+                time_left=(int)millisUntilFinished;
             }
 
             public void onFinish() {
                 Toast.makeText(getApplicationContext(),"Timer Done",Toast.LENGTH_SHORT).show();
+                running=false;
             }
         };
     }

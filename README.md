@@ -9,7 +9,7 @@ Files (Please checkout files from here so we know what files each person is work
 - LoginActivity Layout - Avi
 - TodoActivity Java - Ma
 - TodoActivity Layout - Ma
-- TimerActivity Java  - 
+- TimerActivity Java  -
 - TimerActivity Layout -
 - TrendsActivity Java
 - TrendsActivity Layout
