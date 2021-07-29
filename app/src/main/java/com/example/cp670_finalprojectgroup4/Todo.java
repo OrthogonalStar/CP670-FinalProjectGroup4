@@ -12,4 +12,11 @@ public class Todo {
     String username;
     int duration;
     Bitmap logo;
+    Status status;
+}
+
+enum Status {
+    INPROGRESS,
+    TBD,
+    FINISHED
 }
