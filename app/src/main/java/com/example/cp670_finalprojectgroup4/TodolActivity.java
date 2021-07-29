@@ -40,7 +40,7 @@ public class TodolActivity extends AppCompatActivity {
     }
 
     public void onItemAdd(View v) {
-        //Pop up a new dialog and submit to add an item here
+        //Pop up a new dialog and suhHimit to add an item here
         showAddItemDialog();
     }
 
@@ -125,6 +125,13 @@ public class TodolActivity extends AppCompatActivity {
 
             View result = null;
             result = inflater.inflate(R.layout.todo_row, null);
+            if(getItem(position).status == Status.TBD){
+                result = inflater.inflate(R.layout.todo_status_tbd,null);
+            }else if(getItem(position).status == Status.INPROGRESS){
+                result = inflater.inflate(R.layout.todo_status_inprogress,null);
+            }else{
+                result = inflater.inflate(R.layout.toto_status_done,null);
+            }
             TextView message = (TextView) result.findViewById(R.id.todo_title);
             message.setText(getItem(position).title); // get the string at position
             return result;
