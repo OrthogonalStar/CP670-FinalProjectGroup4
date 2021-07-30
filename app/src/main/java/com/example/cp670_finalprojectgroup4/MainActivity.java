@@ -10,7 +10,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     protected static final String ACTIVITY_NAME = "MainActivity";
-    Button todo, timer, trends;
+    Button todo, timer, trends,myCalender,login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +18,15 @@ public class MainActivity extends AppCompatActivity {
         Log.i(ACTIVITY_NAME, "In onCreate()");
         setContentView(R.layout.activity_main);
 
+
+        login = (Button) findViewById(R.id.login_button);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(intent);
+            }
+        });
         todo = (Button) findViewById(R.id.todo_button);
         todo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +50,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(new Intent(MainActivity.this, TrendsActivity.class));
+                startActivity(intent);
+            }
+        });
+
+
+
+        myCalender = (Button) findViewById(R.id.mycal_button);
+        myCalender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(new Intent(MainActivity.this, MyCalendar.class));
                 startActivity(intent);
             }
         });
