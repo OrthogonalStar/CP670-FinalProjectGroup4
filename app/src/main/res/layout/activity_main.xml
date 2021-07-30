@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,20 +10,84 @@
 
     <Button
         android:id="@+id/todo_button"
-        android:layout_width="wrap_content"
+        android:layout_width="195dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="273dp"
         android:text="@string/todo_button_text" />
 
     <Button
         android:id="@+id/timer_button"
-        android:layout_width="wrap_content"
+        android:layout_width="198dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="86dp"
+        android:layout_marginBottom="340dp"
         android:text="@string/timer_button_text" />
 
     <Button
         android:id="@+id/trends_button"
-        android:layout_width="wrap_content"
+        android:layout_width="201dp"
         android:layout_height="wrap_content"
+        android:layout_row="4"
+        android:layout_column="2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="86dp"
+        android:layout_marginBottom="396dp"
         android:text="@string/trends_button_text" />
 
-</GridLayout>
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="456dp"
+        android:text="@string/login_btn_login" />
+
+    <Button
+        android:id="@+id/mycal_button"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="93dp"
+        android:layout_marginBottom="211dp"
+        android:text="@string/mycal_button" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="191dp"
+        android:layout_height="86dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="102dp"
+        android:layout_marginBottom="614dp"
+        app:srcCompat="@drawable/todo_list" />
+
+    <TextView
+        android:id="@+id/todo_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="157dp"
+        android:layout_marginBottom="568dp"
+        android:text="@string/title_txt" />
+
+    <TextView
+        android:id="@+id/Dev_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="156dp"
+        android:text="@string/developer_txt" />
+
+</RelativeLayout>

@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.cp670_finalprojectgroup4.data.connector.DatabaseAccessConnector;
 import com.example.cp670_finalprojectgroup4.data.dao.UserDAO;
@@ -19,13 +22,16 @@ public class LoginActivity extends AppCompatActivity {
     protected static final String ACTIVITY_NAME = "LoginActivity";
     Button btnlogin, registerLogin;
     EditText username, password;
-
+    private CheckBox rememberMe;
+    private SharedPreferences mPrefs;
+    private static final  String PREFS_NAME = "PrefsFile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mPrefs = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
         findResources();
-
+        remeberMe();
         DatabaseAccessConnector.connect();
         UserService userService = new UserService(new UserDAO(DatabaseAccessConnector.connection));
 
@@ -66,9 +72,23 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.editUsername);
         password = findViewById(R.id.editPassword);
         registerLogin = findViewById(R.id.registerLogin);
+        rememberMe=findViewById(R.id.remindMe_cb);
     }
 
+    private void remeberMe(){
+        if (rememberMe.isChecked()){
+            Boolean boolIsChecked = rememberMe.isChecked();
+            SharedPreferences.Editor editor =mPrefs.edit();
+            editor.putString("pref_name",username.getText().toString());
+            editor.putString("pref_pass",password.getText().toString());
+            editor.putBoolean("pref_rememberMe",boolIsChecked);
+            editor.apply();
+            Toast.makeText(getApplicationContext(),"Preferenced is saved!",Toast.LENGTH_SHORT).show();
 
+        }else
+            mPrefs.edit().clear().apply();
+
+    }
 
     @Override
     protected void onResume() {
