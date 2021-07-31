@@ -30,6 +30,8 @@
     <string name="todo_list_desc_text">Please enter description :</string>
     <string name="todo_list_desc_edit">description ...</string>
 
+    <string name="welcome">Welcome</string>
+
     <string name="todo_list_location_text">Please enter location :</string>
     <string name="todo_list_location_edit">location ...</string>
 

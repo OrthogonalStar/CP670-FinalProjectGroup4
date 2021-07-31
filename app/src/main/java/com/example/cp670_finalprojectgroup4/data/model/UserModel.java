@@ -1,6 +1,7 @@
 package com.example.cp670_finalprojectgroup4.data.model;
 
 public class UserModel {
+    private Integer id;
     private String name;
     private String email;
     private String password;
@@ -16,14 +17,20 @@ public class UserModel {
         this.salt = salt;
     }
 
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
-                '}';
+    public UserModel(Integer id, String name, String email, String password, String salt) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.salt = salt;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -56,5 +63,16 @@ public class UserModel {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
     }
 }

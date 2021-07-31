@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.cp670_finalprojectgroup4.data.connector.DatabaseAccessConnector;
 import com.example.cp670_finalprojectgroup4.data.dao.UserDAO;
+import com.example.cp670_finalprojectgroup4.data.model.UserData;
+import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 import com.example.cp670_finalprojectgroup4.data.service.UserService;
 
 public class LoginActivity extends AppCompatActivity {
@@ -32,13 +35,23 @@ public class LoginActivity extends AppCompatActivity {
         mPrefs = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
         findResources();
         remeberMe();
-        DatabaseAccessConnector.connect();
-        UserService userService = new UserService(new UserDAO(DatabaseAccessConnector.connection));
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
+
+        //Spring Framework would help here, dependency management like this is stupid
+        UserDAO.setConnection(DatabaseAccessConnector.getConnection());
+        UserService userService = new UserService(new UserDAO());
 
         View.OnClickListener loginListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(UserService.verifyUserByPassword(String.valueOf(username.getText()),String.valueOf(password.getText()))){
+
+                    UserModel user = UserDAO.getUserByEmail(String.valueOf(username.getText()));
+
+                    assert user != null;
+                    ((CurrentUser) getApplication()).setUser(user);
+
                     Intent intent = new Intent(new Intent(LoginActivity.this, MainActivity.class));
                     startActivity(intent);
                 } else {

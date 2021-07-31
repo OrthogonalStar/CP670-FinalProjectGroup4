@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class DatabaseAccessConnector {
 
     private static final String LOG = "DEBUG";
-    public static Connection connection;
+    public static Connection connection = null;
 
     public static Connection connect() {
         Connection conn = null;
@@ -36,7 +36,15 @@ public class DatabaseAccessConnector {
         return connection;
     }
 
+    public static Connection getConnection(){
+        if(connection != null){
+            return connection;
+        }
+        return connect();
+    }
+
     public static void closeConnection() throws SQLException {
-        connect().close();
+        if(connection != null)
+            connection.close();
     }
 }
