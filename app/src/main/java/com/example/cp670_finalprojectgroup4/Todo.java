@@ -2,16 +2,17 @@ package com.example.cp670_finalprojectgroup4;
 
 import android.graphics.Bitmap;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class Todo {
     String title;
     String description;
     String location;
-    Date starttime;
+    Date startdate;
     String username;
     int duration;
-    Bitmap logo;
+    Time starttime;
     Status status;
 }
 

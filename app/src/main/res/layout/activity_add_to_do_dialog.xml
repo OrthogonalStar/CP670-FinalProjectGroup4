@@ -55,7 +55,7 @@
             android:id="@+id/txtLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/todo_list_duration_text" />
+            android:text="@string/todo_list_location_text" />
 
         <EditText
             android:id="@+id/editLocation"
@@ -68,18 +68,34 @@
             />
 
         <TextView
+            android:id="@+id/txtStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/todo_list_custom_dialog_startdate" />
+
+        <EditText
+            android:id="@+id/edtStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:ems="10"
+            android:inputType="date"
+            android:hint="@string/todo_list_custom_dialog_startdate_format"
+            />
+
+        <TextView
             android:id="@+id/txtStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/todo_list_starttime_text" />
 
         <EditText
-            android:id="@+id/startTime"
+            android:id="@+id/edtstartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:ems="10"
-            android:inputType="datetime"
+            android:inputType="time"
             android:hint="@string/todo_list_starttime_label"
             />
 
