@@ -13,6 +13,18 @@ import java.util.List;
 public class UserDAO {
 
     private static Connection connection;
+
+    public static Connection getConnection() {
+        return connection;
+    }
+
+    public static void setConnection(Connection connection) {
+        UserDAO.connection = connection;
+    }
+
+    public UserDAO() {
+    }
+
     public UserDAO(Connection connection) {
         UserDAO.connection = connection;
     }
@@ -43,6 +55,7 @@ public class UserDAO {
                 newUser.setEmail(resultSet.getString(2));
                 newUser.setSalt(resultSet.getString(3));
                 newUser.setPassword(resultSet.getString(4));
+                newUser.setId(resultSet.getInt(5));
             }
             return newUser;
         } catch (SQLException e) {
@@ -81,6 +94,7 @@ public class UserDAO {
                 newUser.setEmail(resultSet.getString(2));
                 newUser.setSalt(resultSet.getString(3));
                 newUser.setPassword(resultSet.getString(4));
+                newUser.setId(resultSet.getInt(5));
                 users.add(newUser);
             }
             return users;

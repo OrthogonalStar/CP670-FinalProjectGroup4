@@ -30,6 +30,8 @@
     <string name="todo_list_desc_text">Please enter description :</string>
     <string name="todo_list_desc_edit">description ...</string>
 
+    <string name="welcome">Welcome</string>
+
     <string name="todo_list_location_text">Please enter location :</string>
     <string name="todo_list_location_edit">location ...</string>
 
@@ -42,5 +44,10 @@
     <string name="todo_list_custom_dialog_cancel">Cancel</string>
 
     <string name="todo_list_custom_dialog_title">Adding a new TODO item</string>
+    <string name="title_txt">TODO List</string>
+    <string name="developer_txt">Developed by : Android programmer - team 4. ver:1.0</string>
+    <string name="remindme_cb">Remind me</string>
+
+    <string name="mycal_button">My Calendar</string>
 
 </resources>
