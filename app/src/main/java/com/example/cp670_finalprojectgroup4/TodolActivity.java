@@ -14,17 +14,24 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TodolActivity extends AppCompatActivity {
     EditText title;
     Button add;
     ArrayList<Todo> todos;
-    ChatAdapter messageAdapter;
+    ChatAdapter listAdapter;
+    ListView todoList;
     protected static final String ACTIVITY_NAME = "TodolActivity";
 
     @Override
@@ -32,16 +39,22 @@ public class TodolActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todol);
         setResoruces();
+        listAdapter = new ChatAdapter( this);
+        todoList.setAdapter (listAdapter);
     }
 
     void setResoruces(){
         title = findViewById(R.id.editTitle);
         add = findViewById(R.id.btnSend);
+        todoList = findViewById(R.id.todoList);
+        todos = new ArrayList<Todo>();
     }
 
     public void onItemAdd(View v) {
         //Pop up a new dialog and suhHimit to add an item here
-        showAddItemDialog();
+        if(title.getText().length()>0) {
+            showAddItemDialog();
+        }
     }
 
     void showAddItemDialog(){
@@ -55,12 +68,39 @@ public class TodolActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //Fetching values and insert to update the list adapter
-                        EditText edit = view.findViewById(R.id.editDesc);
-                        String message = edit.getText().toString();
+                        EditText txtdescription = view.findViewById(R.id.editDesc); //Fields are defined in the dialog resource xml
+                        EditText txtlocation = view.findViewById(R.id.editLocation);
+                        EditText txtstartDate = view.findViewById(R.id.edtStartDate);
+                        EditText txtduration    = view.findViewById(R.id.editDuration);
+                        EditText txtstartTime    = view.findViewById(R.id.edtstartTime);
+
+                        String description, location, startdate, starttime, duration;
+                        description = txtdescription.getText().toString();
+                        location = txtlocation.getText().toString();
+                        startdate = txtstartDate.getText().toString();
+                        starttime = txtstartTime.getText().toString();
+                        duration = txtduration.getText().toString();
 
                         //Tested
-                        Snackbar.make(findViewById(R.id.TodoList), message, Snackbar.LENGTH_SHORT)
+                        Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
+
+                        Todo todo = new Todo();
+                        todo.title = title.getText().toString();
+                        todo.description = description;
+                        todo.location = location;
+                        try {
+                            Date dt=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
+                            DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                            Time time = new Time(formatter.parse(starttime).getTime());
+                            todo.startdate = dt;
+                            todo.starttime = time;
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        todo.duration = Integer.parseInt(duration);
+                        todos.add(todo);
+                        listAdapter.notifyDataSetChanged();
                     }
                 })
                 .setNegativeButton(R.string.todo_list_custom_dialog_cancel,
@@ -122,18 +162,23 @@ public class TodolActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) TodolActivity.this.getLayoutInflater();
-
+            String statusDisplay;
             View result = null;
             result = inflater.inflate(R.layout.todo_row, null);
-            if(getItem(position).status == Status.TBD){
+            if(getItem(position).status == Status.TBD || getItem(position).status == null){
                 result = inflater.inflate(R.layout.todo_status_tbd,null);
+                statusDisplay = "TBD";
             }else if(getItem(position).status == Status.INPROGRESS){
                 result = inflater.inflate(R.layout.todo_status_inprogress,null);
+                statusDisplay = "INPROGRESS";
             }else{
                 result = inflater.inflate(R.layout.toto_status_done,null);
+                statusDisplay = "FINISHED";
             }
-            TextView message = (TextView) result.findViewById(R.id.todo_title);
-            message.setText(getItem(position).title); // get the string at position
+            TextView title = result.findViewById(R.id.todo_title);
+            TextView status = result.findViewById(R.id.todo_status);
+            title.setText(getItem(position).title);
+            status.setText(statusDisplay);
             return result;
             //return super.getView(position, convertView, parent);
         }

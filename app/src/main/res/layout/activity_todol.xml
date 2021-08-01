@@ -9,7 +9,7 @@
     android:id="@+id/TodoList">
 
     <ListView
-        android:id="@+id/chatView"
+        android:id="@+id/todoList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/btnSend"

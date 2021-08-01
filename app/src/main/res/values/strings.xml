@@ -36,12 +36,14 @@
     <string name="todo_list_location_edit">location ...</string>
 
     <string name="todo_list_starttime_text">Please enter a start time :</string>
-    <string name="todo_list_starttime_label">starting time ...</string>
+    <string name="todo_list_starttime_label">HH:MM:SS</string>
 
     <string name="todo_list_duration_text">Please enter duration :</string>
-    <string name="todo_list_duration_edit">duration ...</string>
+    <string name="todo_list_duration_edit"># of hours</string>
 
     <string name="todo_list_custom_dialog_cancel">Cancel</string>
+    <string name="todo_list_custom_dialog_startdate">Please enter start date :</string>
+    <string name="todo_list_custom_dialog_startdate_format">DD/MM/YYYY</string>
 
     <string name="todo_list_custom_dialog_title">Adding a new TODO item</string>
     <string name="title_txt">TODO List</string>
