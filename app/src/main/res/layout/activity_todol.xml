@@ -52,8 +52,15 @@
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onItemAdd"
+            android:onClick="OnItemDelete"
             android:text="@string/todo_delete_item_click"></Button>
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="OnClearSeleted"
+            android:text="@string/todo_clear_item_click"></Button>
 
     </LinearLayout>
 
