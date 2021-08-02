@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -34,6 +37,7 @@ public class TodolActivity extends AppCompatActivity {
     ChatAdapter listAdapter;
     ListView todoList;
     Todo selected;
+    int selectedPosition;
     protected static final String ACTIVITY_NAME = "TodolActivity";
 
     @Override
@@ -61,7 +65,8 @@ public class TodolActivity extends AppCompatActivity {
         todoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selected = todos.get(position);
+                selectedPosition = position;
+                selected = todos.get(selectedPosition);
                 title.setText(selected.title);
             }
         });
@@ -78,8 +83,104 @@ public class TodolActivity extends AppCompatActivity {
         }
     }
 
-    public void OnItemUpdate(View v){
+    public void onTodoSave(View v) {
+        SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        TodoList list = new TodoList();
+        list.todos = todos;
+        String json = gson.toJson(list);
+        prefsEditor.putString("toods", json);
+        prefsEditor.commit();
+        TestGettingTodosFromSharedPlace();
+    }
 
+    public void TestGettingTodosFromSharedPlace(){
+        SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString("toods", "");
+        TodoList list = new TodoList();
+        list = gson.fromJson(json, TodoList.class);
+        Log.i(ACTIVITY_NAME,String.valueOf(list.todos.toArray().length));
+        //todos = list.todos;
+    }
+
+    public void OnItemUpdate(View v){
+        //todo_list_custom_dialog_update_title
+        Log.i(ACTIVITY_NAME,title.getText().toString());
+        //&& inTodo(title.getText().toString())
+        if((title.getText().length()>0)){
+            ShowEditDialog();
+        }
+    }
+
+    public boolean inTodo(String title){
+        for (Todo o:todos) {
+            if(o.title==title){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void ShowEditDialog(){
+        AlertDialog.Builder customDialog =
+                new AlertDialog.Builder(this);
+        // Get the layout inflater
+        LayoutInflater inflater = getLayoutInflater();
+        final View view = inflater.inflate(R.layout.activity_update_to_do_dialog, null);
+
+        EditText txtdescription = view.findViewById(R.id.editUpdateDesc); //Fields are defined in the dialog resource xml
+        EditText txtlocation = view.findViewById(R.id.editUpdateLocation);
+        EditText txtstartDate = view.findViewById(R.id.edtUpdateStartDate);
+        EditText txtduration    = view.findViewById(R.id.editUpdateDuration);
+        EditText txtstartTime    = view.findViewById(R.id.edtUpdatestartTime);
+
+        customDialog.setView(view).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String description, location, startdate, starttime, duration;
+                description = txtdescription.getText().toString();
+                location = txtlocation.getText().toString();
+                startdate = txtstartDate.getText().toString();
+                starttime = txtstartTime.getText().toString();
+                duration = txtduration.getText().toString();
+
+                Todo todo = new Todo();
+                todo.title = title.getText().toString();
+                todo.description = description;
+                todo.location = location;
+                try {
+                    Date dt=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
+                    DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                    Time time = new Time(formatter.parse(starttime).getTime());
+                    todo.startdate = dt;
+                    todo.starttime = time;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                todo.duration = Integer.parseInt(duration);
+                todos.remove(selected);
+                selected = todo;
+                todos.add(selectedPosition,todo);
+                listAdapter.notifyDataSetChanged();
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        Dialog dialog = customDialog.create();
+        dialog.show();
+
+        txtdescription.setText(selected.description);
+        txtlocation.setText(selected.location);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        txtstartDate.setText(formatter.format(selected.startdate));
+        txtduration.setText(String.valueOf(selected.duration));
+        txtstartTime.setText(selected.starttime.toString());
     }
 
     public void OnItemDelete(View v){
