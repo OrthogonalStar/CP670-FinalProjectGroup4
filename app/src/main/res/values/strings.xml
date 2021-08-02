@@ -10,6 +10,8 @@
     <string name="login_btn_login">Login</string>
     <string name="todo_new_item_title">Type new item tile here ...</string>
     <string name="todo_new_item_click">Add</string>
+    <string name="todo_update_item_click">Update</string>
+    <string name="todo_delete_item_click">Delete</string>
     <string name="todo_item_title">Title</string>
     <string name="todo_item_status">Status</string>
     <string name="start_button">Start</string>

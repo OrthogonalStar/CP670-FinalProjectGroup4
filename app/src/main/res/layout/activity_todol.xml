@@ -12,7 +12,7 @@
         android:id="@+id/todoList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btnSend"
+        android:layout_above="@id/editTitle"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
@@ -21,17 +21,40 @@
         android:id="@+id/editTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:hint="@string/todo_new_item_title"
-        android:layout_toLeftOf="@+id/btnSend"></EditText>
+        android:layout_above="@id/buttonGroups"
+        android:hint="@string/todo_new_item_title"></EditText>
+
+    <LinearLayout
+        android:id="@+id/buttonGroups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        >
 
     <Button
         android:id="@+id/btnSend"
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:onClick="onItemAdd"
         android:text="@string/todo_new_item_click"></Button>
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onItemAdd"
+            android:text="@string/todo_update_item_click"></Button>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onItemAdd"
+            android:text="@string/todo_delete_item_click"></Button>
+
+    </LinearLayout>
+
 </RelativeLayout>
