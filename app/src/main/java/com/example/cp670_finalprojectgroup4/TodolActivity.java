@@ -58,6 +58,18 @@ public class TodolActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(ACTIVITY_NAME,"long click");
+                selectedPosition = position;
+                selected = todos.get(selectedPosition);
+                if(selected.status == Status.TBD || selected.status == null){
+                    selected.status = Status.INPROGRESS;
+                }else if(selected.status == Status.INPROGRESS){
+                    selected.status = Status.FINISHED;
+                }else{
+                    selected.status = Status.TBD;
+                }
+                todos.remove(position);
+                todos.add(position,selected);
+                listAdapter.notifyDataSetChanged();
                 return false;
             }
         });
