@@ -12,7 +12,8 @@
     <string name="todo_new_item_click">Add</string>
     <string name="todo_update_item_click">Update</string>
     <string name="todo_delete_item_click">Delete</string>
-    <string name="todo_clear_item_click">Clear</string>
+    <string name="todo_clear_item_click">X</string>
+    <string name="todo_clear_save_click">Save</string>
     <string name="todo_item_title">Title</string>
     <string name="todo_item_status">Status</string>
     <string name="start_button">Start</string>
@@ -39,7 +40,7 @@
     <string name="todo_list_location_edit">location ...</string>
 
     <string name="todo_list_starttime_text">Please enter a start time :</string>
-    <string name="todo_list_starttime_label">HH:MM:SS</string>
+    <string name="todo_list_starttime_label">HH:MM:SS in 24Hours format</string>
 
     <string name="todo_list_duration_text">Please enter duration :</string>
     <string name="todo_list_duration_edit"># of hours</string>
@@ -49,6 +50,7 @@
     <string name="todo_list_custom_dialog_startdate_format">DD/MM/YYYY</string>
 
     <string name="todo_list_custom_dialog_title">Adding a new TODO item</string>
+    <string name="todo_list_custom_dialog_update_title">Updating a new TODO item</string>
     <string name="title_txt">TODO List</string>
     <string name="developer_txt">Developed by : Android programmer - team 4. ver:1.0</string>
     <string name="remindme_cb">Remind me</string>

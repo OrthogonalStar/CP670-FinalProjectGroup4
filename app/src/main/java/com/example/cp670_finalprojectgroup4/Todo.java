@@ -2,10 +2,13 @@ package com.example.cp670_finalprojectgroup4;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
-public class Todo {
+
+
+public class Todo implements Serializable {
     String title;
     String description;
     String location;
