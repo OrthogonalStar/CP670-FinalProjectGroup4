@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,10 +29,11 @@ import java.util.Date;
 
 public class TodolActivity extends AppCompatActivity {
     EditText title;
-    Button add;
+    Button add,update,delete,clear;
     ArrayList<Todo> todos;
     ChatAdapter listAdapter;
     ListView todoList;
+    Todo selected;
     protected static final String ACTIVITY_NAME = "TodolActivity";
 
     @Override
@@ -48,6 +50,25 @@ public class TodolActivity extends AppCompatActivity {
         add = findViewById(R.id.btnSend);
         todoList = findViewById(R.id.todoList);
         todos = new ArrayList<Todo>();
+        todoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(ACTIVITY_NAME,"long click");
+                return false;
+            }
+        });
+
+        todoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selected = todos.get(position);
+                title.setText(selected.title);
+            }
+        });
+
+        update = findViewById(R.id.btnUpdate);
+        delete = findViewById(R.id.btnDelete);
+        clear = findViewById(R.id.btnClear);
     }
 
     public void onItemAdd(View v) {
@@ -55,6 +76,20 @@ public class TodolActivity extends AppCompatActivity {
         if(title.getText().length()>0) {
             showAddItemDialog();
         }
+    }
+
+    public void OnItemUpdate(View v){
+
+    }
+
+    public void OnItemDelete(View v){
+        todos.remove(selected);
+        listAdapter.notifyDataSetChanged();
+    }
+
+    public void OnClearSeleted(View v){
+        selected = null;
+        title.setText("");
     }
 
     void showAddItemDialog(){
