@@ -33,10 +33,10 @@ Main page
 - 3 large grid buttons (1 for each function) and navigation toolbar
 
 Todo list
-- listDisplay of items in the list (gets items from db) - Ma, might need to look at the db db layers, will just put dummy data for now
-- add new button (opens a field to add an item or just has a textbox)
-- each item has status (in progress, complete etc.)
-- sorted in chronological order so oldest items display first
+- listDisplay of items in the list (gets items from db) - Ma, might need to look at the db db layers, will just put dummy data for now - Ma
+- add new button (opens a field to add an item or just has a textbox) - Ma
+- each item has status (in progress, complete etc.) - Ma
+- sorted in chronological order so oldest items display first - Ma Still working on it. Will try to commit tonight.
 
 Timer
 - selection of activity to link timer to for trends
