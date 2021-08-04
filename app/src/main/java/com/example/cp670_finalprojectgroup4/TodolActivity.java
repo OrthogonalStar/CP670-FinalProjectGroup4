@@ -20,6 +20,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.cp670_finalprojectgroup4.data.connector.DatabaseAccessConnector;
+import com.example.cp670_finalprojectgroup4.data.dao.TodoDAO;
+import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -38,6 +41,8 @@ public class TodolActivity extends AppCompatActivity {
     ListView todoList;
     Todo selected;
     int selectedPosition;
+    TodoDAO todoDAO;
+    UserModel user;
     protected static final String ACTIVITY_NAME = "TodolActivity";
 
     @Override
@@ -47,6 +52,16 @@ public class TodolActivity extends AppCompatActivity {
         setResoruces();
         listAdapter = new ChatAdapter( this);
         todoList.setAdapter (listAdapter);
+
+        todoDAO = new TodoDAO();
+        TodoDAO.setConnection(DatabaseAccessConnector.getConnection());
+
+        user= ((CurrentUser) getApplication()).getUser();
+        if(user == null)
+            finish();
+
+        todos = (ArrayList<Todo>) TodoDAO.getAllToDoItemsForUser(user.getId());
+        listAdapter.notifyDataSetChanged();
     }
 
     void setResoruces(){
@@ -67,8 +82,14 @@ public class TodolActivity extends AppCompatActivity {
                 }else{
                     selected.status = Status.TBD;
                 }
+                TodoDAO.deleteTodo(todos.get(position).todoId);
                 todos.remove(position);
+                selected.setUserId(user.getId());
+                selected.setTodoId(TodoDAO.addTodo(selected));
                 todos.add(position,selected);
+
+
+
                 listAdapter.notifyDataSetChanged();
                 return false;
             }
@@ -171,10 +192,17 @@ public class TodolActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                todo.setUserId(user.getId());
                 todo.duration = Integer.parseInt(duration);
+
+                TodoDAO.deleteTodo(selected.todoId);
+
                 todos.remove(selected);
                 selected = todo;
+
+                todo.setTodoId(TodoDAO.addTodo(todo));
                 todos.add(selectedPosition,todo);
+
                 listAdapter.notifyDataSetChanged();
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -196,11 +224,13 @@ public class TodolActivity extends AppCompatActivity {
     }
 
     public void OnItemDelete(View v){
+        TodoDAO.deleteTodo(selected.todoId);
         todos.remove(selected);
+        OnClearSeleted();
         listAdapter.notifyDataSetChanged();
     }
 
-    public void OnClearSeleted(View v){
+    public void OnClearSeleted(){
         selected = null;
         title.setText("");
     }
@@ -228,6 +258,8 @@ public class TodolActivity extends AppCompatActivity {
                         startdate = txtstartDate.getText().toString();
                         starttime = txtstartTime.getText().toString();
                         duration = txtduration.getText().toString();
+                        if(duration.equals(""))
+                            duration = "60";
 
                         //Tested
                         Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_SHORT)
@@ -247,7 +279,12 @@ public class TodolActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         todo.duration = Integer.parseInt(duration);
+
+                        todo.setUserId(user.getId());
+                        todo.setTodoId(TodoDAO.addTodo(todo));
                         todos.add(todo);
+
+
                         listAdapter.notifyDataSetChanged();
                     }
                 })
