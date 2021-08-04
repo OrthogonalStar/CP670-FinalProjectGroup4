@@ -1,38 +1,81 @@
 package com.example.cp670_finalprojectgroup4;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cp670_finalprojectgroup4.data.dao.TodoDAO;
+import com.example.cp670_finalprojectgroup4.data.model.UserModel;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+
 import static java.lang.Integer.parseInt;
 
-public class TimerActivity extends AppCompatActivity {
-    protected static final String ACTIVITY_NAME = "MainActivity";
+public class TimerActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    protected static final String ACTIVITY_NAME = "TimerActivity";
     Button start, stop, reset;
+    Spinner dropdown;
     int timerlength;
     int time_left;
+    ArrayList<Todo> todos;
     CountDownTimer timer;
     boolean running;
+    String selected;
+    boolean recording;
+
+    UserModel user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        user= ((CurrentUser) getApplication()).getUser();
+        if(user == null)
+            finish();
+
         running=false;
+        recording=false;
         Log.i(ACTIVITY_NAME, "In onCreate()");
         setContentView(R.layout.activity_timer);
         ((TextView)findViewById(R.id.timer)).setText("0:00");
+
+
+    }
+
+    private ArrayList<String> getToDoNames() {
+        ArrayList<String> s=new ArrayList<>();
+        if (todos!=null) {
+            for (int x = 0; x < todos.size(); x++) {
+                s.add(todos.get(x).getTitle());
+            }
+        }
+        else{
+            s.add("empty");
+        }
+        return s;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.i(ACTIVITY_NAME, "In onResume()");
+        todos=(ArrayList<Todo>) TodoDAO.getAllToDoItemsForUser(user.getId());
+        dropdown = findViewById(R.id.selectedToDo);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, getToDoNames());
+        dropdown.setAdapter(adapter);
     }
 
     @Override
@@ -89,8 +132,12 @@ public class TimerActivity extends AppCompatActivity {
             time_left=1500000;
             create_timer(1500000);
             running=true;
+            if (selected !=null) recording=true;
         }
     }
+
+
+
 
     private void create_timer(int length){
         timer=new CountDownTimer(length, 1000) {
@@ -102,8 +149,24 @@ public class TimerActivity extends AppCompatActivity {
 
             public void onFinish() {
                 Toast.makeText(getApplicationContext(),"Timer Done",Toast.LENGTH_SHORT).show();
+                if (recording){
+
+                }
+
                 running=false;
+                recording=false;
+
             }
         };
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        selected=(String)parent.getItemAtPosition(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        selected=null;
     }
 }

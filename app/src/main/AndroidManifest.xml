@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CP670FinalProjectGroup4">
-        <activity android:name=".MyCalendar"></activity>
+
+        <activity android:name=".MyCalendar" />
         <activity android:name=".RegisterUserActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -24,8 +25,7 @@
         <activity android:name=".TrendsActivity" />
         <activity android:name=".TodolActivity" />
         <activity android:name=".TimerActivity" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

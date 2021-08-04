@@ -56,5 +56,6 @@
     <string name="remindme_cb">Remind me</string>
 
     <string name="mycal_button">My Calendar</string>
+    <string name="selectToDo">Enter a ToDo item</string>
 
 </resources>
