@@ -27,14 +27,15 @@ public class LoginActivity extends AppCompatActivity {
     EditText username, password;
     private CheckBox rememberMe;
     private SharedPreferences mPrefs;
-    private static final  String PREFS_NAME = "PrefsFile";
+    private static final String PREFS_NAME = "PrefsFile";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mPrefs = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
         findResources();
-        remeberMe();
+        loadLogin();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
 
@@ -51,6 +52,18 @@ public class LoginActivity extends AppCompatActivity {
 
                     assert user != null;
                     ((CurrentUser) getApplication()).setUser(user);
+
+                    if (rememberMe.isChecked()){
+                        Boolean boolIsChecked = rememberMe.isChecked();
+                        SharedPreferences.Editor editor = mPrefs.edit();
+                        editor.putString("pref_name",username.getText().toString());
+                        editor.putString("pref_pass",password.getText().toString());
+                        editor.putBoolean("pref_rememberMe",boolIsChecked);
+                        editor.commit();
+                        Toast.makeText(getApplicationContext(),"Login is saved!",Toast.LENGTH_SHORT).show();
+
+                    }else
+                        mPrefs.edit().clear().commit();
 
                     Intent intent = new Intent(new Intent(LoginActivity.this, MainActivity.class));
                     startActivity(intent);
@@ -85,29 +98,24 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.editUsername);
         password = findViewById(R.id.editPassword);
         registerLogin = findViewById(R.id.registerLogin);
-        rememberMe=findViewById(R.id.remindMe_cb);
+        rememberMe = findViewById(R.id.remindMe_cb);
     }
 
-    private void remeberMe(){
-        if (rememberMe.isChecked()){
-            Boolean boolIsChecked = rememberMe.isChecked();
-            SharedPreferences.Editor editor =mPrefs.edit();
-            editor.putString("pref_name",username.getText().toString());
-            editor.putString("pref_pass",password.getText().toString());
-            editor.putBoolean("pref_rememberMe",boolIsChecked);
-            editor.apply();
-            Toast.makeText(getApplicationContext(),"Preferenced is saved!",Toast.LENGTH_SHORT).show();
-
-        }else
-            mPrefs.edit().clear().apply();
-
+    private void loadLogin(){
+        if(mPrefs.getBoolean("pref_rememberMe", false)){
+            username.setText(mPrefs.getString("pref_name", ""));
+            password.setText(mPrefs.getString("pref_pass", ""));
+            rememberMe.setChecked(true);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        username.setText("");
-        password.setText("");
+        if(!mPrefs.getBoolean("pref_rememberMe", false)) {
+            username.setText("");
+            password.setText("");
+        }
         Log.i(ACTIVITY_NAME, "In onResume()");
     }
 

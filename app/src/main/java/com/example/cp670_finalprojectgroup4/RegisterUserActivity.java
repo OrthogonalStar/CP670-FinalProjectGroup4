@@ -29,8 +29,6 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         findResources();
 
-
-
         View.OnClickListener loginListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
