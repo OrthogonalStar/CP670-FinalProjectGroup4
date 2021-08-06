@@ -69,14 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        myCalender = (Button) findViewById(R.id.mycal_button);
-        myCalender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(new Intent(MainActivity.this, MyCalendar.class));
-                startActivity(intent);
-            }
-        });
     }
 
     private void updateUserName(){
