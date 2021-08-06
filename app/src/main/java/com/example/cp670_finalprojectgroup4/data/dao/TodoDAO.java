@@ -17,6 +17,9 @@ public class TodoDAO {
 
     private static Connection connection;
 
+    //constant for core of the sql statement to retrieve items
+    private static final String GET_ITEMS_BASE = "select todoId, userId, title, description, location, startdate, duration, starttime, status from todo_activity";
+
     public static Connection getConnection() {
         return connection;
     }
@@ -28,22 +31,17 @@ public class TodoDAO {
     public TodoDAO() {
     }
 
+    //get all todo items in the database regardless of user
     public static List<Todo> getAllToDoItems(){
         List<Todo> todos = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select todoId, userId, title, description, location, startdate, duration, starttime, status from todo_activity;");
+            ResultSet resultSet = statement.executeQuery(GET_ITEMS_BASE +";");
             while (resultSet.next()){
                 Todo newTodo = new Todo();
 
-                newTodo.setTodoId(resultSet.getInt(1));
-                newTodo.setUserId(resultSet.getInt(2));
-                newTodo.setTitle(resultSet.getString(3));
-                newTodo.setDescription(resultSet.getString(4));
-                newTodo.setLocation(resultSet.getString(5));
-                newTodo.setStartdate(resultSet.getDate(6));
-                newTodo.setDuration(resultSet.getInt(7));
-                newTodo.setStarttime(resultSet.getTime(8));
+                setCoreTodo(newTodo, resultSet);
+
                 newTodo.setStatus(Status.INPROGRESS);
                 todos.add(newTodo);
             }
@@ -54,22 +52,17 @@ public class TodoDAO {
         }
     }
 
+    //get todo items in database associated with a particular user
     public static List<Todo> getAllToDoItemsForUser(int userId){
         List<Todo> todos = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select todoId, userId, title, description, location, startdate, duration, starttime, status from todo_activity where userId =" + userId + ";");
+            ResultSet resultSet = statement.executeQuery(GET_ITEMS_BASE + " where userId =" + userId + ";");
             while (resultSet.next()){
                 Todo newTodo = new Todo();
 
-                newTodo.setTodoId(resultSet.getInt(1));
-                newTodo.setUserId(resultSet.getInt(2));
-                newTodo.setTitle(resultSet.getString(3));
-                newTodo.setDescription(resultSet.getString(4));
-                newTodo.setLocation(resultSet.getString(5));
-                newTodo.setStartdate(resultSet.getDate(6));
-                newTodo.setDuration(resultSet.getInt(7));
-                newTodo.setStarttime(resultSet.getTime(8));
+                setCoreTodo(newTodo, resultSet);
+
                 String status = resultSet.getString(9);
                 if(status.equals(String.valueOf(Status.INPROGRESS))){
                     newTodo.setStatus(Status.INPROGRESS);
@@ -88,6 +81,18 @@ public class TodoDAO {
             e.printStackTrace();
             return null;
         }
+    }
+
+    //set the core parameters for a todo object
+    private static void setCoreTodo(Todo newTodo, ResultSet resultSet) throws SQLException{
+        newTodo.setTodoId(resultSet.getInt(1));
+        newTodo.setUserId(resultSet.getInt(2));
+        newTodo.setTitle(resultSet.getString(3));
+        newTodo.setDescription(resultSet.getString(4));
+        newTodo.setLocation(resultSet.getString(5));
+        newTodo.setStartdate(resultSet.getDate(6));
+        newTodo.setDuration(resultSet.getInt(7));
+        newTodo.setStarttime(resultSet.getTime(8));
     }
 
     public static int addTodo(Todo todo){

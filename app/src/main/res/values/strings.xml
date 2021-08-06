@@ -53,7 +53,7 @@
     <string name="todo_list_custom_dialog_update_title">Updating a new TODO item</string>
     <string name="title_txt">TODO List</string>
     <string name="developer_txt">Developed by : Android programmer - team 4. ver:1.0</string>
-    <string name="remindme_cb">Remind me</string>
+    <string name="remember_me_cb">Remember Login</string>
 
     <string name="mycal_button">My Calendar</string>
     <string name="selectToDo">Enter a ToDo item</string>
