@@ -169,6 +169,18 @@ public class TodolActivity extends AppCompatActivity {
                 description = txtdescription.getText().toString();
                 startdate = txtstartDate.getText().toString();
 
+                if(startdate.equals("")){
+                    Date date = new Date();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    startdate = formatter.format(date);
+                }
+
+                if(title.equals("")){
+                    Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_LONG)
+                            .setAction("Please enter a name", null).show();
+                    return;
+                }
+
                 Todo todo = new Todo();
                 todo.title = title;
                 todo.description = description;
@@ -236,6 +248,18 @@ public class TodolActivity extends AppCompatActivity {
                         title = txtTitle.getText().toString();
                         description = txtdescription.getText().toString();
                         startdate = txtstartDate.getText().toString();
+
+                        if(startdate.equals("")){
+                            Date date = new Date();
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                            startdate = formatter.format(date);
+                        }
+
+                        if(title.equals("")){
+                            Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_LONG)
+                                    .setAction("Please enter a name", null).show();
+                            return;
+                        }
 
                         //Tested
                         Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_SHORT)
