@@ -273,7 +273,7 @@ public class TrendsActivity extends AppCompatActivity {
         for(int i=0; i<count; i++){
             Todo item = todos.get(i);
             xData.add(item.getTitle());
-            yData.add(item.getDuration());
+            //yData.add(item.getDuration());
             Log.d(TAG, "setxyDaya: x["+i+"]-----> "+xData+".... y["+i+"] ---->"+yData);
         }
 
