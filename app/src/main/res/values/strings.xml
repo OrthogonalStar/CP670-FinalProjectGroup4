@@ -59,6 +59,6 @@
     <string name="selectToDo">Enter a ToDo item</string>
 
     <string name="todo_list_title_text">Name of new Item</string>
-    <string name="todo_list_title_edit">Update item name</string>
+    <string name="todo_list_title_edit">Item name</string>
 
 </resources>
