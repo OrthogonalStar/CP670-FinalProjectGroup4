@@ -34,8 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TodolActivity extends AppCompatActivity {
-    EditText title;
-    Button add,update,delete,clear;
+    Button add,update,delete;
     ArrayList<Todo> todos;
     ChatAdapter listAdapter;
     ListView todoList;
@@ -65,7 +64,6 @@ public class TodolActivity extends AppCompatActivity {
     }
 
     void setResoruces(){
-        title = findViewById(R.id.editTitle);
         add = findViewById(R.id.btnSend);
         todoList = findViewById(R.id.todoList);
         todos = new ArrayList<Todo>();
@@ -82,11 +80,12 @@ public class TodolActivity extends AppCompatActivity {
                 }else{
                     selected.status = Status.TBD;
                 }
-                TodoDAO.deleteTodo(todos.get(position).todoId);
+                //TodoDAO.deleteTodo(todos.get(position).todoId);
                 todos.remove(position);
                 selected.setUserId(user.getId());
-                selected.setTodoId(TodoDAO.addTodo(selected));
+                //selected.setTodoId(TodoDAO.addTodo(selected));
                 todos.add(position,selected);
+                TodoDAO.updateTodo(selected);
 
 
 
@@ -100,20 +99,16 @@ public class TodolActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedPosition = position;
                 selected = todos.get(selectedPosition);
-                title.setText(selected.title);
             }
         });
 
         update = findViewById(R.id.btnUpdate);
         delete = findViewById(R.id.btnDelete);
-        clear = findViewById(R.id.btnClear);
     }
 
     public void onItemAdd(View v) {
         //Pop up a new dialog and suhHimit to add an item here
-        if(title.getText().length()>0) {
-            showAddItemDialog();
-        }
+        showAddItemDialog();
     }
 
     public void onTodoSave(View v) {
@@ -139,12 +134,9 @@ public class TodolActivity extends AppCompatActivity {
     }
 
     public void OnItemUpdate(View v){
-        //todo_list_custom_dialog_update_title
-        Log.i(ACTIVITY_NAME,title.getText().toString());
         //&& inTodo(title.getText().toString())
-        if((title.getText().length()>0)){
-            ShowEditDialog();
-        }
+        ShowEditDialog();
+
     }
 
     public boolean inTodo(String title){
@@ -163,45 +155,51 @@ public class TodolActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View view = inflater.inflate(R.layout.activity_update_to_do_dialog, null);
 
+        EditText txtTitle = view.findViewById(R.id.editUpdateTitle);
         EditText txtdescription = view.findViewById(R.id.editUpdateDesc); //Fields are defined in the dialog resource xml
-        EditText txtlocation = view.findViewById(R.id.editUpdateLocation);
         EditText txtstartDate = view.findViewById(R.id.edtUpdateStartDate);
-        EditText txtduration    = view.findViewById(R.id.editUpdateDuration);
-        EditText txtstartTime    = view.findViewById(R.id.edtUpdatestartTime);
+
 
         customDialog.setView(view).setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String description, location, startdate, starttime, duration;
+                String description, startdate, title;
+                title = txtTitle.getText().toString();
                 description = txtdescription.getText().toString();
-                location = txtlocation.getText().toString();
                 startdate = txtstartDate.getText().toString();
-                starttime = txtstartTime.getText().toString();
-                duration = txtduration.getText().toString();
+
+                if(startdate.equals("")){
+                    Date date = new Date();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    startdate = formatter.format(date);
+                }
+
+                if(title.equals("")){
+                    Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_LONG)
+                            .setAction("Please enter a name", null).show();
+                    return;
+                }
 
                 Todo todo = new Todo();
-                todo.title = title.getText().toString();
+                todo.title = title;
                 todo.description = description;
-                todo.location = location;
+
                 try {
                     Date dt=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
-                    DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                    Time time = new Time(formatter.parse(starttime).getTime());
                     todo.startdate = dt;
-                    todo.starttime = time;
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 todo.setUserId(user.getId());
-                todo.duration = Integer.parseInt(duration);
 
-                TodoDAO.deleteTodo(selected.todoId);
+                //TodoDAO.deleteTodo(selected.todoId);
 
                 todos.remove(selected);
+                todo.setTodoId(selected.todoId);
                 selected = todo;
-
-                todo.setTodoId(TodoDAO.addTodo(todo));
+                //todo.setTodoId(TodoDAO.addTodo(todo));
                 todos.add(selectedPosition,todo);
+                TodoDAO.updateTodo(todo);
 
                 listAdapter.notifyDataSetChanged();
             }
@@ -216,23 +214,14 @@ public class TodolActivity extends AppCompatActivity {
         dialog.show();
 
         txtdescription.setText(selected.description);
-        txtlocation.setText(selected.location);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         txtstartDate.setText(formatter.format(selected.startdate));
-        txtduration.setText(String.valueOf(selected.duration));
-        txtstartTime.setText(selected.starttime.toString());
     }
 
     public void OnItemDelete(View v){
         TodoDAO.deleteTodo(selected.todoId);
         todos.remove(selected);
-        OnClearSeleted();
         listAdapter.notifyDataSetChanged();
-    }
-
-    public void OnClearSeleted(){
-        selected = null;
-        title.setText("");
     }
 
     void showAddItemDialog(){
@@ -246,39 +235,40 @@ public class TodolActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //Fetching values and insert to update the list adapter
+                        EditText txtTitle = view.findViewById(R.id.editTitle);
                         EditText txtdescription = view.findViewById(R.id.editDesc); //Fields are defined in the dialog resource xml
-                        EditText txtlocation = view.findViewById(R.id.editLocation);
                         EditText txtstartDate = view.findViewById(R.id.edtStartDate);
-                        EditText txtduration    = view.findViewById(R.id.editDuration);
-                        EditText txtstartTime    = view.findViewById(R.id.edtstartTime);
 
-                        String description, location, startdate, starttime, duration;
+                        String title, description, startdate;
+                        title = txtTitle.getText().toString();
                         description = txtdescription.getText().toString();
-                        location = txtlocation.getText().toString();
                         startdate = txtstartDate.getText().toString();
-                        starttime = txtstartTime.getText().toString();
-                        duration = txtduration.getText().toString();
-                        if(duration.equals(""))
-                            duration = "60";
+
+                        if(startdate.equals("")){
+                            Date date = new Date();
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                            startdate = formatter.format(date);
+                        }
+
+                        if(title.equals("")){
+                            Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_LONG)
+                                    .setAction("Please enter a name", null).show();
+                            return;
+                        }
 
                         //Tested
                         Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
 
                         Todo todo = new Todo();
-                        todo.title = title.getText().toString();
+                        todo.title = title;
                         todo.description = description;
-                        todo.location = location;
                         try {
                             Date dt=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
-                            DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                            Time time = new Time(formatter.parse(starttime).getTime());
                             todo.startdate = dt;
-                            todo.starttime = time;
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        todo.duration = Integer.parseInt(duration);
 
                         todo.setUserId(user.getId());
                         todo.setTodoId(TodoDAO.addTodo(todo));

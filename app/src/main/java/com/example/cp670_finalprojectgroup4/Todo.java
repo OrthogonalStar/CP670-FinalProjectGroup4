@@ -13,10 +13,7 @@ public class Todo implements Serializable {
     int userId;
     String title;
     String description;
-    String location;
     Date startdate;
-    int duration;
-    Time starttime;
     Status status;
 
     @Override
@@ -26,10 +23,7 @@ public class Todo implements Serializable {
                 ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", location='" + location + '\'' +
                 ", startdate=" + startdate +
-                ", duration=" + duration +
-                ", starttime=" + starttime +
                 ", status=" + status +
                 '}';
     }
@@ -37,15 +31,12 @@ public class Todo implements Serializable {
     public Todo() {
     }
 
-    public Todo(int todoId, int userId, String title, String description, String location, Date startdate, int duration, Time starttime, Status status) {
+    public Todo(int todoId, int userId, String title, String description, Date startdate, Status status) {
         this.todoId = todoId;
         this.title = title;
         this.description = description;
-        this.location = location;
         this.startdate = startdate;
         this.userId = userId;
-        this.duration = duration;
-        this.starttime = starttime;
         this.status = status;
     }
 
@@ -73,14 +64,6 @@ public class Todo implements Serializable {
         this.description = description;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public Date getStartdate() {
         return startdate;
     }
@@ -95,22 +78,6 @@ public class Todo implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public Time getStarttime() {
-        return starttime;
-    }
-
-    public void setStarttime(Time starttime) {
-        this.starttime = starttime;
     }
 
     public Status getStatus() {
