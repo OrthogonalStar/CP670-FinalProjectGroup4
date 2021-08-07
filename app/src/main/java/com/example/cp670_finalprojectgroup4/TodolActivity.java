@@ -25,15 +25,14 @@ import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class TodolActivity extends AppCompatActivity {
-    Button add,update,delete;
+    Button add,update,delete,clear;
+    EditText title;
     ArrayList<Todo> todos;
     ChatAdapter listAdapter;
     ListView todoList;
@@ -42,8 +41,6 @@ public class TodolActivity extends AppCompatActivity {
     TodoDAO todoDAO;
     UserModel user;
     protected static final String ACTIVITY_NAME = "TodolActivity";
-    Date date;
-    Date time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +65,8 @@ public class TodolActivity extends AppCompatActivity {
     void setResoruces(){
         add = findViewById(R.id.btnSend);
         todoList = findViewById(R.id.todoList);
+        clear = findViewById(R.id.btnTitleTxtClear);
+        title = findViewById(R.id.editTitle);
         todos = new ArrayList<Todo>();
         todoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
