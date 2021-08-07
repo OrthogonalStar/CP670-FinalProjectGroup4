@@ -99,7 +99,7 @@ public class TodoDAO {
         newTodo.setStartdate(resultSet.getDate(5));
     }
 
-    //todo will need to update this for the change in todo data stored
+    // todo will need to update this for the change in todo data stored
     // This method will be called by TrendsActivity to get the data based on each day
     public static List<Todo> getTrendActivity(int userId, String startDt){
         List<Todo> todos = new ArrayList<>();

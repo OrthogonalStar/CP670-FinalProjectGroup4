@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TodolActivity extends AppCompatActivity {
-    Button add,update,delete,clear;
+    Button add,update,delete;
     ArrayList<Todo> todos;
     ChatAdapter listAdapter;
     ListView todoList;
@@ -104,7 +104,6 @@ public class TodolActivity extends AppCompatActivity {
 
         update = findViewById(R.id.btnUpdate);
         delete = findViewById(R.id.btnDelete);
-        clear = findViewById(R.id.btnClear);
     }
 
     public void onItemAdd(View v) {
@@ -135,7 +134,6 @@ public class TodolActivity extends AppCompatActivity {
     }
 
     public void OnItemUpdate(View v){
-
         //&& inTodo(title.getText().toString())
         ShowEditDialog();
 
@@ -169,6 +167,18 @@ public class TodolActivity extends AppCompatActivity {
                 title = txtTitle.getText().toString();
                 description = txtdescription.getText().toString();
                 startdate = txtstartDate.getText().toString();
+
+                if(startdate.equals("")){
+                    Date date = new Date();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    startdate = formatter.format(date);
+                }
+
+                if(title.equals("")){
+                    Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_LONG)
+                            .setAction("Please enter a name", null).show();
+                    return;
+                }
 
                 Todo todo = new Todo();
                 todo.title = title;
@@ -211,12 +221,7 @@ public class TodolActivity extends AppCompatActivity {
     public void OnItemDelete(View v){
         TodoDAO.deleteTodo(selected.todoId);
         todos.remove(selected);
-        OnClearSeleted();
         listAdapter.notifyDataSetChanged();
-    }
-
-    public void OnClearSeleted(){
-        selected = null;
     }
 
     void showAddItemDialog(){
@@ -238,6 +243,18 @@ public class TodolActivity extends AppCompatActivity {
                         title = txtTitle.getText().toString();
                         description = txtdescription.getText().toString();
                         startdate = txtstartDate.getText().toString();
+
+                        if(startdate.equals("")){
+                            Date date = new Date();
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                            startdate = formatter.format(date);
+                        }
+
+                        if(title.equals("")){
+                            Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_LONG)
+                                    .setAction("Please enter a name", null).show();
+                            return;
+                        }
 
                         //Tested
                         Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_SHORT)

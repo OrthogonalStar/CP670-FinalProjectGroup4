@@ -39,7 +39,7 @@
             android:id="@+id/txtUpdateTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/todo_list_desc_text" />
+            android:text="@string/todo_list_title_text" />
 
         <EditText
             android:id="@+id/editUpdateTitle"
