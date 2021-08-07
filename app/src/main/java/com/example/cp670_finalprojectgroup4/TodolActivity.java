@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TodolActivity extends AppCompatActivity {
-    Button add,update,delete,clear;
+    Button add,update,delete;
     ArrayList<Todo> todos;
     ChatAdapter listAdapter;
     ListView todoList;
@@ -103,7 +103,6 @@ public class TodolActivity extends AppCompatActivity {
 
         update = findViewById(R.id.btnUpdate);
         delete = findViewById(R.id.btnDelete);
-        clear = findViewById(R.id.btnClear);
     }
 
     public void onItemAdd(View v) {
@@ -134,7 +133,6 @@ public class TodolActivity extends AppCompatActivity {
     }
 
     public void OnItemUpdate(View v){
-
         //&& inTodo(title.getText().toString())
         ShowEditDialog();
 
@@ -221,12 +219,7 @@ public class TodolActivity extends AppCompatActivity {
     public void OnItemDelete(View v){
         TodoDAO.deleteTodo(selected.todoId);
         todos.remove(selected);
-        OnClearSeleted();
         listAdapter.notifyDataSetChanged();
-    }
-
-    public void OnClearSeleted(){
-        selected = null;
     }
 
     void showAddItemDialog(){
