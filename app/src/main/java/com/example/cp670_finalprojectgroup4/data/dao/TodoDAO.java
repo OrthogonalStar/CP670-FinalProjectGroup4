@@ -49,7 +49,16 @@ public class TodoDAO {
 
                 setCoreTodo(newTodo, resultSet);
 
-                newTodo.setStatus(Status.INPROGRESS);
+                String status = resultSet.getString(9);
+                if(status.equals(String.valueOf(Status.INPROGRESS))){
+                    newTodo.setStatus(Status.INPROGRESS);
+                }
+                if(status.equals(String.valueOf(Status.TBD))){
+                    newTodo.setStatus(Status.TBD);
+                }
+                if(status.equals(String.valueOf(Status.FINISHED))){
+                    newTodo.setStatus(Status.FINISHED);
+                }
                 todos.add(newTodo);
             }
             return todos;
@@ -161,8 +170,7 @@ public class TodoDAO {
             if(rows != 0){
                 ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    int id = (int)generatedKeys.getLong(1);
-                    return id;
+                    return (int) generatedKeys.getLong(1);
                 }
             }
 
