@@ -56,7 +56,7 @@
     <string name="remember_me_cb">Remember Login</string>
 
     <string name="mycal_button">My Calendar</string>
-    <string name="selectToDo">Enter a ToDo item</string>
+    <string name="selectToDo">Select a ToDo item</string>
 
     <string name="todo_list_title_text">Name of new Item</string>
     <string name="todo_list_title_edit">Item name</string>

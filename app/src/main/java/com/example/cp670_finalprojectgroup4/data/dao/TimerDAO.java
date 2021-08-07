@@ -47,11 +47,11 @@ public class TimerDAO {
         }
     }
 
-    public static List<TimerModel> getAllTimersForUser(int userId){
+    public static List<TimerModel> getAllTimersForUser(int userId, int todoId){
         List<TimerModel> timers = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from todo_timer where userId = " + userId + ";");
+            ResultSet resultSet = statement.executeQuery("select * from todo_timer where userId = " + userId + " and todoId=" + todoId + ";");
             while (resultSet.next()){
                 TimerModel newTimer = new TimerModel();
 

@@ -108,40 +108,16 @@ public class TodoDAO {
         newTodo.setStartdate(resultSet.getDate(5));
     }
 
-    // todo will need to update this for the change in todo data stored
-    // This method will be called by TrendsActivity to get the data based on each day
-    public static List<Todo> getTrendActivity(int userId, String startDt){
-        List<Todo> todos = new ArrayList<>();
-        java.util.Date dt = Calendar.getInstance().getTime();
-        TrendsActivity td = new TrendsActivity();
-        int i=0;
+    public static String getItemName(int todoId, int userId){
+        String title = "";
         try {
             Statement statement = connection.createStatement();
-
-            ResultSet resultSet = statement.executeQuery("select  title,  startdate, SUM(duration) duration from todo_activity where userId =" + userId + "  group by title,  startdate;");
+            ResultSet resultSet = statement.executeQuery("select title from from todo_activity where todoId =" + todoId + " and userId=" + userId + ";");
             while (resultSet.next()){
-                Todo newTodo = new Todo();
-
-                newTodo.setTitle(resultSet.getString(1));
-                newTodo.setStartdate(resultSet.getDate(2));
-                //newTodo.setDuration(resultSet.getInt(3));
-                todos.add(newTodo);
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String strDate = dateFormat.format(newTodo.getStartdate());
-                Log.d("TODO", "getTrendActivity: Date convrted to String"+strDate);
-                // check input date with start date
-                if (startDt.equals(strDate)) {
-                    //TrendsActivity.setxyData(i,,resultSet.getString(1));
-                    Log.d("getTrendActivity", "getTrendActivity: "+newTodo.getTitle());
-                    //Log.d("getTrendActivity", "getTrendActivity: "+newTodo.getDuration());
-                    Log.d("TODO", "getTrendActivity: returning data for "+strDate+" and "+startDt);
-                }
-                else {
-                    todos.remove(newTodo);
-                }
+                title = resultSet.getString("title");
             }
-            return todos;
-        } catch (SQLException  e) {
+            return title;
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
