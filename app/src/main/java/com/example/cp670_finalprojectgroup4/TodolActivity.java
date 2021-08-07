@@ -80,11 +80,12 @@ public class TodolActivity extends AppCompatActivity {
                 }else{
                     selected.status = Status.TBD;
                 }
-                TodoDAO.deleteTodo(todos.get(position).todoId);
+                //TodoDAO.deleteTodo(todos.get(position).todoId);
                 todos.remove(position);
                 selected.setUserId(user.getId());
-                selected.setTodoId(TodoDAO.addTodo(selected));
+                //selected.setTodoId(TodoDAO.addTodo(selected));
                 todos.add(position,selected);
+                TodoDAO.updateTodo(selected);
 
 
 
@@ -191,13 +192,14 @@ public class TodolActivity extends AppCompatActivity {
                 }
                 todo.setUserId(user.getId());
 
-                TodoDAO.deleteTodo(selected.todoId);
+                //TodoDAO.deleteTodo(selected.todoId);
 
                 todos.remove(selected);
+                todo.setTodoId(selected.todoId);
                 selected = todo;
-
-                todo.setTodoId(TodoDAO.addTodo(todo));
+                //todo.setTodoId(TodoDAO.addTodo(todo));
                 todos.add(selectedPosition,todo);
+                TodoDAO.updateTodo(todo);
 
                 listAdapter.notifyDataSetChanged();
             }

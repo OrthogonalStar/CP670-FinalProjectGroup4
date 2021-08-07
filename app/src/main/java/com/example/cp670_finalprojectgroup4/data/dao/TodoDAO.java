@@ -115,7 +115,7 @@ public class TodoDAO {
 
                 newTodo.setTitle(resultSet.getString(1));
                 newTodo.setStartdate(resultSet.getDate(2));
-                newTodo.setDuration(resultSet.getInt(3));
+                //newTodo.setDuration(resultSet.getInt(3));
                 todos.add(newTodo);
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String strDate = dateFormat.format(newTodo.getStartdate());
@@ -124,7 +124,7 @@ public class TodoDAO {
                 if (startDt.equals(strDate)) {
                     //TrendsActivity.setxyData(i,,resultSet.getString(1));
                     Log.d("getTrendActivity", "getTrendActivity: "+newTodo.getTitle());
-                    Log.d("getTrendActivity", "getTrendActivity: "+newTodo.getDuration());
+                    //Log.d("getTrendActivity", "getTrendActivity: "+newTodo.getDuration());
                     Log.d("TODO", "getTrendActivity: returning data for "+strDate+" and "+startDt);
                 }
                 else {
@@ -161,6 +161,25 @@ public class TodoDAO {
                 }
             }
 
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static int updateTodo(Todo todo){
+        try {
+            String query =
+                    "update todo_activity set title = ? , description = ?, startdate = ?, status = ? where todoId = ?;";
+
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setString (1, todo.getTitle());
+            preparedStmt.setString (2, todo.getDescription());
+            preparedStmt.setDate (3, new java.sql.Date(todo.getStartdate().getTime()));
+            preparedStmt.setString (4, String.valueOf(todo.getStatus()));
+            preparedStmt.setInt (5, todo.getTodoId());
+            preparedStmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

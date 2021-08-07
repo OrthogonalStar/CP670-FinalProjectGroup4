@@ -79,6 +79,5 @@ public class TrendsActivity extends AppCompatActivity {
 
             }
         });
-    }
 
 }
