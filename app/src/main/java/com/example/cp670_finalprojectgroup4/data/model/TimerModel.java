@@ -6,16 +6,30 @@ public class TimerModel {
     private int timerId;
     private int userId;
     private int todoId;
-    private Date totalTime;
+    private Date startTime;
+    private Date endTime;
 
     public TimerModel() {
     }
 
-    public TimerModel(int timerId, int userId, int todoId, Date totalTime) {
+
+    public TimerModel(int timerId, int userId, int todoId, Date startTime, Date endTime) {
         this.timerId = timerId;
         this.userId = userId;
         this.todoId = todoId;
-        this.totalTime = totalTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "TimerModel{" +
+                "timerId=" + timerId +
+                ", userId=" + userId +
+                ", todoId=" + todoId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 
     public int getTimerId() {
@@ -42,21 +56,19 @@ public class TimerModel {
         this.todoId = todoId;
     }
 
-    public Date getTotalTime() {
-        return totalTime;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setTotalTime(Date totalTime) {
-        this.totalTime = totalTime;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    @Override
-    public String toString() {
-        return "TimerModel{" +
-                "timerId=" + timerId +
-                ", userId=" + userId +
-                ", todoId=" + todoId +
-                ", totalTime=" + totalTime +
-                '}';
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }
