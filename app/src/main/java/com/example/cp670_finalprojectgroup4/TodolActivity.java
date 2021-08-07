@@ -1,14 +1,10 @@
 package com.example.cp670_finalprojectgroup4;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cp670_finalprojectgroup4.data.connector.DatabaseAccessConnector;
 import com.example.cp670_finalprojectgroup4.data.dao.TodoDAO;
@@ -44,6 +43,8 @@ public class TodolActivity extends AppCompatActivity {
     TodoDAO todoDAO;
     UserModel user;
     protected static final String ACTIVITY_NAME = "TodolActivity";
+    Date date;
+    Date time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class TodolActivity extends AppCompatActivity {
         TodoDAO.setConnection(DatabaseAccessConnector.getConnection());
 
         user= ((CurrentUser) getApplication()).getUser();
+        Log.i(ACTIVITY_NAME,user.getId().toString());
         if(user == null)
             finish();
 
@@ -106,7 +108,7 @@ public class TodolActivity extends AppCompatActivity {
 
         update = findViewById(R.id.btnUpdate);
         delete = findViewById(R.id.btnDelete);
-        clear = findViewById(R.id.btnClear);
+        clear = findViewById(R.id.btnTitleTxtClear);
     }
 
     public void onItemAdd(View v) {
@@ -226,11 +228,18 @@ public class TodolActivity extends AppCompatActivity {
     public void OnItemDelete(View v){
         TodoDAO.deleteTodo(selected.todoId);
         todos.remove(selected);
-        OnClearSeleted();
+        ClearSeleted();
         listAdapter.notifyDataSetChanged();
     }
 
-    public void OnClearSeleted(){
+    public void OnClearSelected(View v){
+        ClearSeleted();
+
+
+    }
+
+
+    public void ClearSeleted(){
         selected = null;
         title.setText("");
     }
@@ -283,8 +292,7 @@ public class TodolActivity extends AppCompatActivity {
                         todo.setUserId(user.getId());
                         todo.setTodoId(TodoDAO.addTodo(todo));
                         todos.add(todo);
-
-
+                        selected = todo; //Let's get the created todo selected first to prevent selection errors
                         listAdapter.notifyDataSetChanged();
                     }
                 })
