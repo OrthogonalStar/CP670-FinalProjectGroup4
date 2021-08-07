@@ -25,7 +25,7 @@ public class TodoDAO {
     private static Connection connection;
 
     //constant for core of the sql statement to retrieve items
-    private static final String GET_ITEMS_BASE = "select todoId, userId, title, description, location, startdate, duration, starttime, status from todo_activity";
+    private static final String GET_ITEMS_BASE = "select todoId, userId, title, description, startdate, status from todo_activity";
 
     public static Connection getConnection() {
         return connection;
@@ -70,7 +70,7 @@ public class TodoDAO {
 
                 setCoreTodo(newTodo, resultSet);
 
-                String status = resultSet.getString(9);
+                String status = resultSet.getString(6);
                 if(status.equals(String.valueOf(Status.INPROGRESS))){
                     newTodo.setStatus(Status.INPROGRESS);
                 }
@@ -96,12 +96,10 @@ public class TodoDAO {
         newTodo.setUserId(resultSet.getInt(2));
         newTodo.setTitle(resultSet.getString(3));
         newTodo.setDescription(resultSet.getString(4));
-        newTodo.setLocation(resultSet.getString(5));
-        newTodo.setStartdate(resultSet.getDate(6));
-        newTodo.setDuration(resultSet.getInt(7));
-        newTodo.setStarttime(resultSet.getTime(8));
+        newTodo.setStartdate(resultSet.getDate(5));
     }
-  
+
+    //todo will need to update this for the change in todo data stored
     // This method will be called by TrendsActivity to get the data based on each day
     public static List<Todo> getTrendActivity(int userId, String startDt){
         List<Todo> todos = new ArrayList<>();
@@ -143,18 +141,15 @@ public class TodoDAO {
     public static int addTodo(Todo todo){
         try {
             String query = "" +
-                    "insert into todo_activity( userId, title, description, location, startdate, duration, starttime, status)"
-                    + " values (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "insert into todo_activity( userId, title, description, startdate, status)"
+                    + " values (?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt (1, todo.getUserId());
             preparedStmt.setString (2, todo.getTitle());
             preparedStmt.setString   (3, todo.getDescription());
-            preparedStmt.setString(4, todo.getLocation());
-            preparedStmt.setDate (5, new java.sql.Date(todo.getStartdate().getTime()));
-            preparedStmt.setInt (6, todo.getDuration());
-            preparedStmt.setTime(7, todo.getStarttime());
-            preparedStmt.setString(8, String.valueOf(todo.getStatus()));
+            preparedStmt.setDate (4, new java.sql.Date(todo.getStartdate().getTime()));
+            preparedStmt.setString(5, String.valueOf(todo.getStatus()));
 
             int rows = preparedStmt.executeUpdate();
 
