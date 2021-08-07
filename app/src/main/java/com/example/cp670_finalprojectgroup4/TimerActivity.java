@@ -20,7 +20,11 @@ import com.example.cp670_finalprojectgroup4.data.dao.TodoDAO;
 import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import static java.lang.Integer.parseInt;
 
@@ -34,6 +38,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
     CountDownTimer timer;
     boolean running;
     String selected;
+    int selectedPos;
     boolean recording;
 
     UserModel user;
@@ -150,6 +155,10 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
             public void onFinish() {
                 Toast.makeText(getApplicationContext(),"Timer Done",Toast.LENGTH_SHORT).show();
                 if (recording){
+                    Date c = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                    String date = df.format(c);
+
 
                 }
 
@@ -163,6 +172,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         selected=(String)parent.getItemAtPosition(position);
+        selectedPos=position;
     }
 
     @Override

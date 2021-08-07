@@ -22,13 +22,13 @@ public class UserDAO {
         UserDAO.connection = connection;
     }
 
-    public UserDAO() {
-    }
+    public UserDAO() { }
 
     public UserDAO(Connection connection) {
         UserDAO.connection = connection;
     }
 
+    //check if user exists in the database based on the email
     public static Boolean userExists(String email){
         Statement statement = null;
         try {
@@ -44,6 +44,7 @@ public class UserDAO {
         return false;
     }
 
+    //get user by email
     public static UserModel getUserByEmail(String email){
         UserModel newUser = null;
         try {
@@ -51,11 +52,8 @@ public class UserDAO {
             ResultSet resultSet = statement.executeQuery("Select * from Users where email ='" + email + "';");
             while (resultSet.next()){
                 newUser = new UserModel();
-                newUser.setName(resultSet.getString(1));
-                newUser.setEmail(resultSet.getString(2));
-                newUser.setSalt(resultSet.getString(3));
-                newUser.setPassword(resultSet.getString(4));
-                newUser.setId(resultSet.getInt(5));
+
+                setCoreUser(newUser, resultSet);
             }
             return newUser;
         } catch (SQLException e) {
@@ -64,6 +62,36 @@ public class UserDAO {
         }
     }
 
+    //get all users in the database
+    public static List<UserModel> getAllUsers(){
+        List<UserModel> users = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("Select * from Users;");
+            while (resultSet.next()){
+                UserModel newUser = new UserModel();
+
+                setCoreUser(newUser, resultSet);
+
+                users.add(newUser);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //set the core parameters for a user object
+    private static void setCoreUser(UserModel newUser, ResultSet resultSet) throws SQLException{
+        newUser.setName(resultSet.getString(1));
+        newUser.setEmail(resultSet.getString(2));
+        newUser.setSalt(resultSet.getString(3));
+        newUser.setPassword(resultSet.getString(4));
+        newUser.setId(resultSet.getInt(5));
+    }
+
+    //add new user to the database
     public static void addUser(UserModel userModel){
         try {
             String query = "" +
@@ -83,25 +111,6 @@ public class UserDAO {
         }
     }
 
-    public static List<UserModel> getAllUsers(){
-        List<UserModel> users = new ArrayList<>();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("Select * from Users;");
-            while (resultSet.next()){
-                UserModel newUser = new UserModel();
-                newUser.setName(resultSet.getString(1));
-                newUser.setEmail(resultSet.getString(2));
-                newUser.setSalt(resultSet.getString(3));
-                newUser.setPassword(resultSet.getString(4));
-                newUser.setId(resultSet.getInt(5));
-                users.add(newUser);
-            }
-            return users;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 
 }

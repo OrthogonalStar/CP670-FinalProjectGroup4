@@ -17,7 +17,7 @@ import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 
 public class MainActivity extends AppCompatActivity {
     protected static final String ACTIVITY_NAME = "MainActivity";
-    Button todo, timer, trends,myCalender,login;
+    Button todo, timer, trends;
     private SharedPreferences sharedPreferences;
     private static Context context;
 
@@ -32,14 +32,6 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
         updateUserName();
 
-        login = (Button) findViewById(R.id.login_button);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(new Intent(MainActivity.this, LoginActivity.class));
-                startActivity(intent);
-            }
-        });
         todo = (Button) findViewById(R.id.todo_button);
         todo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,17 +55,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(new Intent(MainActivity.this, TrendsActivity.class));
-                startActivity(intent);
-            }
-        });
-
-
-
-        myCalender = (Button) findViewById(R.id.mycal_button);
-        myCalender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(new Intent(MainActivity.this, MyCalendar.class));
                 startActivity(intent);
             }
         });

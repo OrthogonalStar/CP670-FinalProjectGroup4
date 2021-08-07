@@ -54,6 +54,6 @@
         android:id="@+id/remindMe_cb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/remindme_cb" />
+        android:text="@string/remember_me_cb" />
 
 </LinearLayout>

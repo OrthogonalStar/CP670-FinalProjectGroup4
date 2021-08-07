@@ -1,7 +1,10 @@
 package com.example.cp670_finalprojectgroup4.data.dao;
 
+import android.util.Log;
+
 import com.example.cp670_finalprojectgroup4.Status;
 import com.example.cp670_finalprojectgroup4.Todo;
+import com.example.cp670_finalprojectgroup4.TrendsActivity;
 import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 
 import java.sql.Connection;
@@ -10,12 +13,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class TodoDAO {
 
     private static Connection connection;
+
+    //constant for core of the sql statement to retrieve items
+    private static final String GET_ITEMS_BASE = "select todoId, userId, title, description, location, startdate, duration, starttime, status from todo_activity";
 
     public static Connection getConnection() {
         return connection;
@@ -28,22 +38,17 @@ public class TodoDAO {
     public TodoDAO() {
     }
 
+    //get all todo items in the database regardless of user
     public static List<Todo> getAllToDoItems(){
         List<Todo> todos = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select todoId, userId, title, description, location, startdate, duration, starttime, status from todo_activity;");
+            ResultSet resultSet = statement.executeQuery(GET_ITEMS_BASE +";");
             while (resultSet.next()){
                 Todo newTodo = new Todo();
 
-                newTodo.setTodoId(resultSet.getInt(1));
-                newTodo.setUserId(resultSet.getInt(2));
-                newTodo.setTitle(resultSet.getString(3));
-                newTodo.setDescription(resultSet.getString(4));
-                newTodo.setLocation(resultSet.getString(5));
-                newTodo.setStartdate(resultSet.getDate(6));
-                newTodo.setDuration(resultSet.getInt(7));
-                newTodo.setStarttime(resultSet.getTime(8));
+                setCoreTodo(newTodo, resultSet);
+
                 newTodo.setStatus(Status.INPROGRESS);
                 todos.add(newTodo);
             }
@@ -54,22 +59,17 @@ public class TodoDAO {
         }
     }
 
+    //get todo items in database associated with a particular user
     public static List<Todo> getAllToDoItemsForUser(int userId){
         List<Todo> todos = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select todoId, userId, title, description, location, startdate, duration, starttime, status from todo_activity where userId =" + userId + ";");
+            ResultSet resultSet = statement.executeQuery(GET_ITEMS_BASE + " where userId =" + userId + ";");
             while (resultSet.next()){
                 Todo newTodo = new Todo();
 
-                newTodo.setTodoId(resultSet.getInt(1));
-                newTodo.setUserId(resultSet.getInt(2));
-                newTodo.setTitle(resultSet.getString(3));
-                newTodo.setDescription(resultSet.getString(4));
-                newTodo.setLocation(resultSet.getString(5));
-                newTodo.setStartdate(resultSet.getDate(6));
-                newTodo.setDuration(resultSet.getInt(7));
-                newTodo.setStarttime(resultSet.getTime(8));
+                setCoreTodo(newTodo, resultSet);
+
                 String status = resultSet.getString(9);
                 if(status.equals(String.valueOf(Status.INPROGRESS))){
                     newTodo.setStatus(Status.INPROGRESS);
@@ -85,6 +85,56 @@ public class TodoDAO {
             }
             return todos;
         } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+  
+  //set the core parameters for a todo object
+    private static void setCoreTodo(Todo newTodo, ResultSet resultSet) throws SQLException{
+        newTodo.setTodoId(resultSet.getInt(1));
+        newTodo.setUserId(resultSet.getInt(2));
+        newTodo.setTitle(resultSet.getString(3));
+        newTodo.setDescription(resultSet.getString(4));
+        newTodo.setLocation(resultSet.getString(5));
+        newTodo.setStartdate(resultSet.getDate(6));
+        newTodo.setDuration(resultSet.getInt(7));
+        newTodo.setStarttime(resultSet.getTime(8));
+    }
+  
+    // This method will be called by TrendsActivity to get the data based on each day
+    public static List<Todo> getTrendActivity(int userId, String startDt){
+        List<Todo> todos = new ArrayList<>();
+        java.util.Date dt = Calendar.getInstance().getTime();
+        TrendsActivity td = new TrendsActivity();
+        int i=0;
+        try {
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("select  title,  startdate, SUM(duration) duration from todo_activity where userId =" + userId + "  group by title,  startdate;");
+            while (resultSet.next()){
+                Todo newTodo = new Todo();
+
+                newTodo.setTitle(resultSet.getString(1));
+                newTodo.setStartdate(resultSet.getDate(2));
+                newTodo.setDuration(resultSet.getInt(3));
+                todos.add(newTodo);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String strDate = dateFormat.format(newTodo.getStartdate());
+                Log.d("TODO", "getTrendActivity: Date convrted to String"+strDate);
+                // check input date with start date
+                if (startDt.equals(strDate)) {
+                    //TrendsActivity.setxyData(i,,resultSet.getString(1));
+                    Log.d("getTrendActivity", "getTrendActivity: "+newTodo.getTitle());
+                    Log.d("getTrendActivity", "getTrendActivity: "+newTodo.getDuration());
+                    Log.d("TODO", "getTrendActivity: returning data for "+strDate+" and "+startDt);
+                }
+                else {
+                    todos.remove(newTodo);
+                }
+            }
+            return todos;
+        } catch (SQLException  e) {
             e.printStackTrace();
             return null;
         }
