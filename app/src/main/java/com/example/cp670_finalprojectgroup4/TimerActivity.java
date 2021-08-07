@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cp670_finalprojectgroup4.data.connector.DatabaseAccessConnector;
 import com.example.cp670_finalprojectgroup4.data.dao.TodoDAO;
 import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 
@@ -57,6 +58,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_timer);
         ((TextView)findViewById(R.id.timer)).setText("0:00");
 
+        TodoDAO.setConnection(DatabaseAccessConnector.getConnection());
 
     }
 
@@ -126,6 +128,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
 
     public void five_min_timer(View view) {
         if (!running){
+            ((TextView)findViewById(R.id.timer)).setText("5:00");
             time_left=300000;
             create_timer (300000);
             running=true;
@@ -134,6 +137,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
 
     public void twentyfive_min_timer(View view) {
         if (!running){
+            ((TextView)findViewById(R.id.timer)).setText("25:00");
             time_left=1500000;
             create_timer(1500000);
             running=true;

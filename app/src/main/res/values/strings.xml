@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">CP670-FinalProjectGroup4</string>
+    <string name="app_name">Pomodoro Timer</string>
     <string name="todo_button_text">Todo</string>
     <string name="timer_button_text">Pomodoro Timer</string>
     <string name="trends_button_text">Activity Data</string>
     <string name="login_txt_username">Username</string>
-    <string name="login_hint_username">Type user name here ...</string>
+    <string name="login_hint_username">jane@doe.com</string>
     <string name="login_txt_pass">Password</string>
-    <string name="login_hint_pass">Type password here ...</string>
+    <string name="login_hint_pass">****</string>
     <string name="login_btn_login">Login</string>
     <string name="todo_new_item_title">Type new item tile here ...</string>
     <string name="todo_new_item_click">Add</string>
@@ -52,13 +52,14 @@
     <string name="todo_list_custom_dialog_title">Adding a new TODO item</string>
     <string name="todo_list_custom_dialog_update_title">Updating a new TODO item</string>
     <string name="title_txt">TODO List</string>
-    <string name="developer_txt">Developed by : Android programmer - team 4. ver:1.0</string>
+    <string name="developer_txt">Developed by: Android Programmer - Team 4 - V1.0</string>
     <string name="remember_me_cb">Remember Login</string>
 
     <string name="mycal_button">My Calendar</string>
-    <string name="selectToDo">Enter a ToDo item</string>
+    <string name="selectToDo">Select a ToDo item</string>
 
     <string name="todo_list_title_text">Name of new Item</string>
-    <string name="todo_list_title_edit">Update item name</string>
+    <string name="todo_list_title_edit">Item name</string>
+    <string name="_0_00">0:00</string>
 
 </resources>

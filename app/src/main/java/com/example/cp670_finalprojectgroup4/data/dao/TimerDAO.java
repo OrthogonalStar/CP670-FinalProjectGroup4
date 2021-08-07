@@ -37,8 +37,8 @@ public class TimerDAO {
                 newTimer.setTimerId(resultSet.getInt(1));
                 newTimer.setUserId(resultSet.getInt(2));
                 newTimer.setTodoId(resultSet.getInt(3));
-                newTimer.setTotalTime(resultSet.getDate(4));
-
+                newTimer.setStartTime(resultSet.getDate(4));
+                newTimer.setEndTime(resultSet.getDate(4));
             }
             return timers;
         } catch (SQLException e) {
@@ -47,19 +47,19 @@ public class TimerDAO {
         }
     }
 
-    public static List<TimerModel> getAllTimersForUser(int userId){
+    public static List<TimerModel> getAllTimersForUser(int userId, int todoId){
         List<TimerModel> timers = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from todo_timer where userId = " + userId + ";");
+            ResultSet resultSet = statement.executeQuery("select * from todo_timer where userId = " + userId + " and todoId=" + todoId + ";");
             while (resultSet.next()){
                 TimerModel newTimer = new TimerModel();
 
                 newTimer.setTimerId(resultSet.getInt(1));
                 newTimer.setUserId(resultSet.getInt(2));
                 newTimer.setTodoId(resultSet.getInt(3));
-                newTimer.setTotalTime(resultSet.getDate(4));
-
+                newTimer.setStartTime(resultSet.getDate(4));
+                newTimer.setEndTime(resultSet.getDate(5));
             }
             return timers;
         } catch (SQLException e) {
@@ -71,13 +71,14 @@ public class TimerDAO {
     public static int addTimer(TimerModel timer){
         try {
             String query = "" +
-                    "insert into todo_timer( userId, todoId, totalTime)"
-                    + " values (?, ?, ?)";
+                    "insert into todo_timer( userId, todoId, startTime, endTime)"
+                    + " values (?, ?, ?, ?)";
 
             PreparedStatement preparedStmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt (1, timer.getUserId());
             preparedStmt.setInt (2, timer.getTodoId());
-            preparedStmt.setDate   (3, new java.sql.Date(timer.getTotalTime().getTime()));
+            preparedStmt.setDate   (3, new java.sql.Date(timer.getStartTime().getTime()));
+            preparedStmt.setDate   (4, new java.sql.Date(timer.getEndTime().getTime()));
             int rows = preparedStmt.executeUpdate();
 
             if(rows != 0){

@@ -31,8 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TodolActivity extends AppCompatActivity {
-    Button add,update,delete,clear;
-    EditText title;
+    Button add,update,delete;
     ArrayList<Todo> todos;
     ChatAdapter listAdapter;
     ListView todoList;
@@ -65,8 +64,6 @@ public class TodolActivity extends AppCompatActivity {
     void setResoruces(){
         add = findViewById(R.id.btnSend);
         todoList = findViewById(R.id.todoList);
-        clear = findViewById(R.id.btnTitleTxtClear);
-        title = findViewById(R.id.editTitle);
         todos = new ArrayList<Todo>();
         todoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -105,7 +102,6 @@ public class TodolActivity extends AppCompatActivity {
 
         update = findViewById(R.id.btnUpdate);
         delete = findViewById(R.id.btnDelete);
-        clear = findViewById(R.id.btnTitleTxtClear);
     }
 
     public void onItemAdd(View v) {
@@ -223,20 +219,9 @@ public class TodolActivity extends AppCompatActivity {
     public void OnItemDelete(View v){
         TodoDAO.deleteTodo(selected.todoId);
         todos.remove(selected);
-        ClearSeleted();
         listAdapter.notifyDataSetChanged();
     }
 
-    public void OnClearSelected(View v){
-        ClearSeleted();
-    }
-
-
-    public void ClearSeleted(){
-        selected = null;
-        title.setText("");
-    }
-  
     void showAddItemDialog(){
         AlertDialog.Builder customDialog =
                 new AlertDialog.Builder(this);

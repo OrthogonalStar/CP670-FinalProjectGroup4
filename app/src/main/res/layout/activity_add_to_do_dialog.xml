@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:textAlignment="center"
-            android:hint="@string/todo_list_desc_edit"
+            android:hint="@string/todo_list_title_edit"
             android:inputType="textPersonName"
             />
 
