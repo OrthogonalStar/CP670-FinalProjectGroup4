@@ -58,6 +58,12 @@
             android:onClick="onTodoSave"
             android:text="@string/todo_clear_save_click"></Button>
 
+        <Button
+            android:id="@+id/btnTitleTxtClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="OnClearSelected"
+            android:text="@string/todo_clear_item_click"></Button>
     </LinearLayout>
 
 
