@@ -12,18 +12,10 @@
         android:id="@+id/todoList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/editTitle"
+        android:layout_above="@id/buttonGroups"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:id="@+id/editTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_above="@id/buttonGroups"
-        android:hint="@string/todo_new_item_title"></EditText>
 
     <LinearLayout
         android:id="@+id/buttonGroups"
@@ -34,17 +26,19 @@
         android:orientation="horizontal"
         >
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onItemAdd"
-        android:text="@string/todo_new_item_click"></Button>
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:onClick="onItemAdd"
+            android:text="@string/todo_new_item_click"></Button>
 
         <Button
             android:id="@+id/btnUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:onClick="OnItemUpdate"
             android:text="@string/todo_update_item_click"></Button>
 
@@ -52,6 +46,7 @@
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:onClick="OnItemDelete"
             android:text="@string/todo_delete_item_click"></Button>
 
@@ -59,6 +54,7 @@
             android:id="@+id/btnSaveTodoList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:onClick="onTodoSave"
             android:text="@string/todo_clear_save_click"></Button>
 
@@ -68,7 +64,6 @@
             android:layout_height="wrap_content"
             android:onClick="OnClearSelected"
             android:text="@string/todo_clear_item_click"></Button>
-
     </LinearLayout>
 
 
