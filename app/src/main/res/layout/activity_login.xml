@@ -11,49 +11,50 @@
     <TextView
         android:id="@+id/txtLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="@string/login_txt_username" />
+        android:layout_height="30dp"
+        android:text="@string/login_txt_username"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/editUsername"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:textAlignment="center"
-        android:hint="@string/login_hint_username" />
+        android:hint="@string/login_hint_username"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="@string/login_txt_pass" />
+        android:layout_height="30dp"
+        android:text="@string/login_txt_pass"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/editPassword"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:textAlignment="center"
         android:hint="@string/login_hint_pass"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
+        android:layout_width="229dp"
         android:layout_height="wrap_content"
         android:text="@string/login_btn_login" />
 
     <Button
         android:id="@+id/registerLogin"
-        android:layout_width="match_parent"
+        android:layout_width="228dp"
         android:layout_height="wrap_content"
         android:text="Register" />
+
     <CheckBox
         android:id="@+id/remindMe_cb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="154dp"
+        android:layout_height="25dp"
         android:text="@string/remember_me_cb" />
 
 </LinearLayout>
