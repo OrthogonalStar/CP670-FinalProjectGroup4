@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Minuteur Pomodoro</string>
+    <string name="app_name">ToodleDo</string>
     <string name="todo_button_text">A Faire</string>
     <string name="timer_button_text">Minuteur Pomodoro</string>
     <string name="trends_button_text">Donnees d\'activite</string>

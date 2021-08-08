@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pomodoro Timer</string>
+    <string name="app_name">ToodleDo</string>
     <string name="todo_button_text">Todo</string>
     <string name="timer_button_text">Pomodoro Timer</string>
     <string name="trends_button_text">Activity Data</string>
