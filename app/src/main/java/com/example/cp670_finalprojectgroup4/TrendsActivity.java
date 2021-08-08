@@ -88,7 +88,7 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
                 lineDataSet = new LineDataSet(lineEntries, "");
                 lineData = new LineData(lineDataSet);
                 lineChart.setData(lineData);
-                lineChart.invalidate();
+                //lineChart.invalidate();
             }
         });
     }
@@ -100,7 +100,13 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
 
         for(int i=0; i<timers.size(); i++){
             TimerModel current = timers.get(i);
+            Log.i(ACTIVITY_NAME, current.getStartTime().getTime() + "");
+            Log.i(ACTIVITY_NAME, current.getEndTime().getTime() + "");
+
             long time = current.getEndTime().getTime() - current.getStartTime().getTime();
+
+            Log.i(ACTIVITY_NAME, time + "");
+
             String date = ft.format(current.getEndTime());
 
              if(entries.get(date) != null){
@@ -109,7 +115,7 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
                  entries.put(date, time);
              }
         }
-
+        Log.i(ACTIVITY_NAME, entries.toString());
         lineEntries = new ArrayList<Entry>();
         for(String key: entries.keySet()){
             Date dt = new Date();
