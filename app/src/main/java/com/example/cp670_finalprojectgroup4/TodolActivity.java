@@ -211,6 +211,7 @@ public class TodolActivity extends AppCompatActivity {
         Dialog dialog = customDialog.create();
         dialog.show();
 
+        txtTitle.setText(selected.title);
         txtdescription.setText(selected.description);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         txtstartDate.setText(formatter.format(selected.startdate));
