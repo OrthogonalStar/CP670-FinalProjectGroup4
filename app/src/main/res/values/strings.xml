@@ -8,11 +8,9 @@
     <string name="login_txt_pass">Password</string>
     <string name="login_hint_pass">****</string>
     <string name="login_btn_login">Login</string>
-    <string name="todo_new_item_title">Type new item tile here ...</string>
     <string name="todo_new_item_click">Add</string>
     <string name="todo_update_item_click">Update</string>
     <string name="todo_delete_item_click">Delete</string>
-    <string name="todo_clear_item_click">X</string>
     <string name="todo_clear_save_click">Save</string>
     <string name="todo_item_title">Title</string>
     <string name="todo_item_status">Status</string>
@@ -22,28 +20,13 @@
     <string name="five_min">5 minutes</string>
     <string name="twentyfive_min">25 minutes</string>
     <string name="title_activity_add_to_do">AddToDoActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="todo_list_desc_text">Please enter description :</string>
     <string name="todo_list_desc_edit">description ...</string>
 
     <string name="welcome">Welcome</string>
-
-    <string name="todo_list_location_text">Please enter location :</string>
-    <string name="todo_list_location_edit">location ...</string>
-
-    <string name="todo_list_starttime_text">Please enter a start time :</string>
-    <string name="todo_list_starttime_label">HH:MM:SS in 24Hours format</string>
-
-    <string name="todo_list_duration_text">Please enter duration :</string>
-    <string name="todo_list_duration_edit"># of hours</string>
 
     <string name="todo_list_custom_dialog_cancel">Cancel</string>
     <string name="todo_list_custom_dialog_startdate">Please enter start date :</string>
@@ -52,10 +35,9 @@
     <string name="todo_list_custom_dialog_title">Adding a new TODO item</string>
     <string name="todo_list_custom_dialog_update_title">Updating a new TODO item</string>
     <string name="title_txt">TODO List</string>
-    <string name="developer_txt">Developed by: Android Programmer - Team 4 - V1.0</string>
+    <string name="developer_txt">Developed by: Android Application Programming - Team 4 - V1.0</string>
     <string name="remember_me_cb">Remember Login</string>
 
-    <string name="mycal_button">My Calendar</string>
     <string name="selectToDo">Select a ToDo item</string>
 
     <string name="todo_list_title_text">Name of new Item</string>

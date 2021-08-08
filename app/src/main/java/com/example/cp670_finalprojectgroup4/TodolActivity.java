@@ -57,7 +57,7 @@ public class TodolActivity extends AppCompatActivity {
         if(user == null)
             finish();
 
-        todos = (ArrayList<Todo>) TodoDAO.getAllToDoItemsForUser(user.getId());
+        todos = (ArrayList<Todo>) TodoDAO.getAllActiveToDoItemsForUser(user.getId());
         listAdapter.notifyDataSetChanged();
     }
 
@@ -253,10 +253,6 @@ public class TodolActivity extends AppCompatActivity {
                                     .setAction("Please enter a name", null).show();
                             return;
                         }
-
-                        //Tested
-                        Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_SHORT)
-                                .setAction("Action", null).show();
 
                         Todo todo = new Todo();
                         todo.title = title;

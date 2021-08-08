@@ -22,6 +22,10 @@ import com.example.cp670_finalprojectgroup4.data.dao.TodoDAO;
 import com.example.cp670_finalprojectgroup4.data.model.TimerModel;
 import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -40,6 +44,8 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 // ****************************************************************
 
 // This Class shows trend in todo item activity over the last week
@@ -88,6 +94,19 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
                 lineDataSet = new LineDataSet(lineEntries, "");
                 lineData = new LineData(lineDataSet);
                 lineChart.setData(lineData);
+                Description desc = lineChart.getDescription();
+                desc.setText("Hours/day");
+                XAxis xAxis = lineChart.getXAxis();
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                xAxis.setValueFormatter(new IAxisValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value, AxisBase axis) {
+                        Date dt = new Date((long) value);
+                        SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
+                        return ft.format(dt);
+                    }
+                });
+                lineChart.setBackgroundColor(Color.WHITE);
                 lineChart.invalidate();
             }
         });
@@ -95,12 +114,15 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void getEntries(){
         timers = (ArrayList<TimerModel>) TimerDAO.getAllTimersForUser(user.getId(), todos.get(selectedPos).getTodoId());
+        System.out.println(timers);
         SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
-        Map<String, Long> entries = new Hashtable();
+        Map<String, Float> entries = new Hashtable();
 
         for(int i=0; i<timers.size(); i++){
             TimerModel current = timers.get(i);
-            long time = current.getEndTime().getTime() - current.getStartTime().getTime();
+
+            float time = current.getEndTime().getTime() - current.getStartTime().getTime();
+
             String date = ft.format(current.getEndTime());
 
              if(entries.get(date) != null){
@@ -111,20 +133,20 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
         }
 
         lineEntries = new ArrayList<Entry>();
-        for(String key: entries.keySet()){
+        SortedSet<String> keys = new TreeSet<>(entries.keySet());
+        for (String key : keys) {
             Date dt = new Date();
             try {
                 dt = new SimpleDateFormat("dd/MM/yyyy").parse(key);
             }catch (ParseException e) {
                 e.printStackTrace();
             }
-            lineEntries.add(new Entry(dt.getTime(), entries.get(key)));
+            lineEntries.add(new Entry(dt.getTime(), entries.get(key)/3600000));
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        selected=(String)parent.getItemAtPosition(position);
         selectedPos=position;
     }
 

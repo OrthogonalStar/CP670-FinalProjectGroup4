@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Minuteur Pomodoro</string>
+    <string name="todo_button_text">A Faire</string>
+    <string name="timer_button_text">Minuteur Pomodoro</string>
+    <string name="trends_button_text">Donnees d\'activite</string>
+    <string name="login_txt_username">Nom d\'Utilisateur</string>
+    <string name="login_hint_username">jane@doe.com</string>
+    <string name="login_txt_pass">Mot De Passe</string>
+    <string name="login_hint_pass">****</string>
+    <string name="login_btn_login">Connectez</string>
+    <string name="todo_new_item_click">Nouveaux</string>
+    <string name="todo_update_item_click">Changement</string>
+    <string name="todo_delete_item_click">Supprimer</string>
+    <string name="todo_clear_save_click">Enregistrer</string>
+    <string name="todo_item_title">Nom</string>
+    <string name="todo_item_status">Etat</string>
+    <string name="start_button">Commence</string>
+    <string name="stop_button">Arret</string>
+    <string name="reset_button">Réinitialiser</string>
+    <string name="five_min">5 minutes</string>
+    <string name="twentyfive_min">25 minutes</string>
+    <string name="title_activity_add_to_do">Ajouter Activite a Faire</string>
+
+    <string name="next">Prochaine</string>
+    <string name="previous">Precedent</string>
+
+    <string name="todo_list_desc_text">Ajouter un description :</string>
+    <string name="todo_list_desc_edit">description</string>
+
+    <string name="welcome">Bienvenue</string>
+
+    <string name="todo_list_custom_dialog_cancel">Annuler</string>
+    <string name="todo_list_custom_dialog_startdate">Date a commencer :</string>
+    <string name="todo_list_custom_dialog_startdate_format">DD/MM/YYYY</string>
+
+    <string name="todo_list_custom_dialog_title">Ajoute un nouveaux activite a faire</string>
+    <string name="todo_list_custom_dialog_update_title">Changer un activite a faire</string>
+    <string name="title_txt">Liste a Faire</string>
+    <string name="developer_txt">Developper par: Android Application Programming - Team 4 - V1.0</string>
+    <string name="remember_me_cb">Souvenir</string>
+
+    <string name="selectToDo">Choisis un activite</string>
+
+    <string name="todo_list_title_text">Nom de nouvelle activite</string>
+    <string name="todo_list_title_edit">Nom</string>
+    <string name="_0_00">0:00</string>
+
+</resources>

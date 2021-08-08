@@ -17,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cp670_finalprojectgroup4.data.connector.DatabaseAccessConnector;
+import com.example.cp670_finalprojectgroup4.data.dao.TimerDAO;
 import com.example.cp670_finalprojectgroup4.data.dao.TodoDAO;
+import com.example.cp670_finalprojectgroup4.data.model.TimerModel;
 import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 import static java.lang.Integer.parseInt;
 
@@ -41,6 +44,8 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
     String selected;
     int selectedPos;
     boolean recording;
+    Date startD;
+    Date endD;
 
     UserModel user;
 
@@ -58,7 +63,13 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_timer);
         ((TextView)findViewById(R.id.timer)).setText("0:00");
 
+        TodoDAO todoDAO = new TodoDAO();
         TodoDAO.setConnection(DatabaseAccessConnector.getConnection());
+
+        TimerDAO timerDAO = new TimerDAO();
+        TimerDAO.setConnection(DatabaseAccessConnector.getConnection());
+
+        System.out.println(TimerDAO.getAllTimers());
 
     }
 
@@ -79,7 +90,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
     protected void onResume() {
         super.onResume();
         Log.i(ACTIVITY_NAME, "In onResume()");
-        todos=(ArrayList<Todo>) TodoDAO.getAllToDoItemsForUser(user.getId());
+        todos=(ArrayList<Todo>) TodoDAO.getAllActiveToDoItemsForUser(user.getId());
         dropdown = findViewById(R.id.selectedToDo);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, getToDoNames());
         dropdown.setAdapter(adapter);
@@ -110,12 +121,22 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public void click_start(View view) {
+        startD = Calendar.getInstance().getTime();
         timer.start();
+        recording = true;
+
     }
 
     public void click_stop(View view) {
         timer.cancel();
         create_timer(time_left);
+        if (recording){
+            Date c = Calendar.getInstance().getTime();
+
+            TimerModel tm =new TimerModel(0,user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
+            TimerDAO.addTimer(tm);
+        }
+        recording = false;
 
     }
 
@@ -123,6 +144,14 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
         timer.cancel();
         ((TextView)findViewById(R.id.timer)).setText("0:00");
         running=false;
+
+        if (recording){
+            Date c = Calendar.getInstance().getTime();
+
+            TimerModel tm =new TimerModel(0,user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
+            TimerDAO.addTimer(tm);
+        }
+        recording = false;
     }
 
 
@@ -140,6 +169,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
             ((TextView)findViewById(R.id.timer)).setText("25:00");
             time_left=1500000;
             create_timer(1500000);
+
             running=true;
             if (selected !=null) recording=true;
         }
@@ -160,10 +190,9 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
                 Toast.makeText(getApplicationContext(),"Timer Done",Toast.LENGTH_SHORT).show();
                 if (recording){
                     Date c = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-                    String date = df.format(c);
 
-
+                    TimerModel tm =new TimerModel(0,user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
+                    TimerDAO.addTimer(tm);
                 }
 
                 running=false;

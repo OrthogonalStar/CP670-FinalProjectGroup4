@@ -30,15 +30,16 @@ public class TimerDAO {
         List<TimerModel> timers = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from todo_timer" +";");
+            ResultSet resultSet = statement.executeQuery("select * from todo_timer;");
             while (resultSet.next()){
                 TimerModel newTimer = new TimerModel();
 
                 newTimer.setTimerId(resultSet.getInt(1));
                 newTimer.setUserId(resultSet.getInt(2));
                 newTimer.setTodoId(resultSet.getInt(3));
-                newTimer.setStartTime(resultSet.getDate(4));
-                newTimer.setEndTime(resultSet.getDate(4));
+                newTimer.setStartTime(resultSet.getTimestamp(4));
+                newTimer.setEndTime(resultSet.getTimestamp(4));
+                timers.add(newTimer);
             }
             return timers;
         } catch (SQLException e) {
@@ -58,8 +59,9 @@ public class TimerDAO {
                 newTimer.setTimerId(resultSet.getInt(1));
                 newTimer.setUserId(resultSet.getInt(2));
                 newTimer.setTodoId(resultSet.getInt(3));
-                newTimer.setStartTime(resultSet.getDate(4));
-                newTimer.setEndTime(resultSet.getDate(5));
+                newTimer.setStartTime(resultSet.getTimestamp(4));
+                newTimer.setEndTime(resultSet.getTimestamp(5));
+                timers.add(newTimer);
             }
             return timers;
         } catch (SQLException e) {
@@ -77,8 +79,8 @@ public class TimerDAO {
             PreparedStatement preparedStmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt (1, timer.getUserId());
             preparedStmt.setInt (2, timer.getTodoId());
-            preparedStmt.setDate   (3, new java.sql.Date(timer.getStartTime().getTime()));
-            preparedStmt.setDate   (4, new java.sql.Date(timer.getEndTime().getTime()));
+            preparedStmt.setTimestamp   (3, new java.sql.Timestamp(timer.getStartTime().getTime()));
+            preparedStmt.setTimestamp   (4, new java.sql.Timestamp(timer.getEndTime().getTime()));
             int rows = preparedStmt.executeUpdate();
 
             if(rows != 0){

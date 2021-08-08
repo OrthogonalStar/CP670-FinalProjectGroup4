@@ -98,6 +98,36 @@ public class TodoDAO {
             return null;
         }
     }
+
+    public static List<Todo> getAllActiveToDoItemsForUser(int userId){
+        List<Todo> todos = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(GET_ITEMS_BASE + " where deleted = 'FALSE' and userId =" + userId + ";");
+            while (resultSet.next()){
+                Todo newTodo = new Todo();
+
+                setCoreTodo(newTodo, resultSet);
+
+                String status = resultSet.getString(6);
+                if(status.equals(String.valueOf(Status.INPROGRESS))){
+                    newTodo.setStatus(Status.INPROGRESS);
+                }
+                if(status.equals(String.valueOf(Status.TBD))){
+                    newTodo.setStatus(Status.TBD);
+                }
+                if(status.equals(String.valueOf(Status.FINISHED))){
+                    newTodo.setStatus(Status.FINISHED);
+                }
+
+                todos.add(newTodo);
+            }
+            return todos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
   
   //set the core parameters for a todo object
     private static void setCoreTodo(Todo newTodo, ResultSet resultSet) throws SQLException{
@@ -174,7 +204,7 @@ public class TodoDAO {
     public static void deleteTodo(int todoId){
         try {
             String query = "" +
-                    "delete from todo_activity where todoId = " + todoId +";";
+                    "update todo_activity set deleted = 'TRUE' where todoId = " + todoId +";";
 
             Statement stmt = connection.createStatement();
 
