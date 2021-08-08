@@ -1,9 +1,5 @@
 package com.example.cp670_finalprojectgroup4;
 
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -11,10 +7,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cp670_finalprojectgroup4.data.connector.DatabaseAccessConnector;
 import com.example.cp670_finalprojectgroup4.data.dao.TimerDAO;
@@ -22,15 +19,9 @@ import com.example.cp670_finalprojectgroup4.data.dao.TodoDAO;
 import com.example.cp670_finalprojectgroup4.data.model.TimerModel;
 import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 
-import java.lang.reflect.InvocationTargetException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-import java.util.UUID;
-
-import static java.lang.Integer.parseInt;
 
 public class TimerActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     protected static final String ACTIVITY_NAME = "TimerActivity";
@@ -133,7 +124,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
         if (recording){
             Date c = Calendar.getInstance().getTime();
 
-            TimerModel tm =new TimerModel(0,user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
+            TimerModel tm =new TimerModel(0,user.getId(),todos.get(dropdown.getSelectedItemPosition()).getTodoId(),startD,c);
             TimerDAO.addTimer(tm);
         }
         recording = false;
@@ -148,7 +139,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
         if (recording){
             Date c = Calendar.getInstance().getTime();
 
-            TimerModel tm =new TimerModel(0,user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
+            TimerModel tm =new TimerModel(0,user.getId(),todos.get(dropdown.getSelectedItemPosition()).getTodoId(),startD,c);
             TimerDAO.addTimer(tm);
         }
         recording = false;

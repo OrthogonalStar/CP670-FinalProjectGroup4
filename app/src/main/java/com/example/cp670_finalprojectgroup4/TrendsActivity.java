@@ -1,20 +1,15 @@
 package com.example.cp670_finalprojectgroup4;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.DatePickerDialog;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cp670_finalprojectgroup4.data.connector.DatabaseAccessConnector;
 import com.example.cp670_finalprojectgroup4.data.dao.TimerDAO;
@@ -22,27 +17,20 @@ import com.example.cp670_finalprojectgroup4.data.dao.TodoDAO;
 import com.example.cp670_finalprojectgroup4.data.model.TimerModel;
 import com.example.cp670_finalprojectgroup4.data.model.UserModel;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -113,7 +101,7 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void getEntries(){
-        timers = (ArrayList<TimerModel>) TimerDAO.getAllTimersForUser(user.getId(), todos.get(selectedPos).getTodoId());
+        timers = (ArrayList<TimerModel>) TimerDAO.getAllTimersForUser(user.getId(), todos.get(dropdown.getSelectedItemPosition()).getTodoId());
         System.out.println(timers);
         SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
         Map<String, Float> entries = new Hashtable();
@@ -148,6 +136,7 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         selectedPos=position;
+        Log.i(ACTIVITY_NAME,String.valueOf(selectedPos));
     }
 
     @Override
