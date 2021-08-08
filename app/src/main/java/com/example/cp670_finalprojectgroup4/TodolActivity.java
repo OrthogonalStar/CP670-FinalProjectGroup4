@@ -57,7 +57,7 @@ public class TodolActivity extends AppCompatActivity {
         if(user == null)
             finish();
 
-        todos = (ArrayList<Todo>) TodoDAO.getAllToDoItemsForUser(user.getId());
+        todos = (ArrayList<Todo>) TodoDAO.getAllActiveToDoItemsForUser(user.getId());
         listAdapter.notifyDataSetChanged();
     }
 

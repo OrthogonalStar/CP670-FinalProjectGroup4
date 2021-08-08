@@ -45,6 +45,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
     int selectedPos;
     boolean recording;
     Date startD;
+    Date endD;
 
     UserModel user;
 
@@ -62,7 +63,13 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_timer);
         ((TextView)findViewById(R.id.timer)).setText("0:00");
 
+        TodoDAO todoDAO = new TodoDAO();
         TodoDAO.setConnection(DatabaseAccessConnector.getConnection());
+
+        TimerDAO timerDAO = new TimerDAO();
+        TimerDAO.setConnection(DatabaseAccessConnector.getConnection());
+
+        System.out.println(TimerDAO.getAllTimers());
 
     }
 
@@ -83,7 +90,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
     protected void onResume() {
         super.onResume();
         Log.i(ACTIVITY_NAME, "In onResume()");
-        todos=(ArrayList<Todo>) TodoDAO.getAllToDoItemsForUser(user.getId());
+        todos=(ArrayList<Todo>) TodoDAO.getAllActiveToDoItemsForUser(user.getId());
         dropdown = findViewById(R.id.selectedToDo);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, getToDoNames());
         dropdown.setAdapter(adapter);
@@ -116,6 +123,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
     public void click_start(View view) {
         startD = Calendar.getInstance().getTime();
         timer.start();
+        recording = true;
 
     }
 
@@ -125,9 +133,10 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
         if (recording){
             Date c = Calendar.getInstance().getTime();
 
-            TimerModel tm =new TimerModel(Integer.parseInt(UUID.randomUUID().toString()),user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
+            TimerModel tm =new TimerModel(0,user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
             TimerDAO.addTimer(tm);
         }
+        recording = false;
 
     }
 
@@ -135,6 +144,14 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
         timer.cancel();
         ((TextView)findViewById(R.id.timer)).setText("0:00");
         running=false;
+
+        if (recording){
+            Date c = Calendar.getInstance().getTime();
+
+            TimerModel tm =new TimerModel(0,user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
+            TimerDAO.addTimer(tm);
+        }
+        recording = false;
     }
 
 
@@ -174,7 +191,7 @@ public class TimerActivity extends AppCompatActivity implements AdapterView.OnIt
                 if (recording){
                     Date c = Calendar.getInstance().getTime();
 
-                    TimerModel tm =new TimerModel(Integer.parseInt(UUID.randomUUID().toString()),user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
+                    TimerModel tm =new TimerModel(0,user.getId(),todos.get(selectedPos).getTodoId(),startD,c);
                     TimerDAO.addTimer(tm);
                 }
 
