@@ -95,6 +95,7 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void getEntries(){
         timers = (ArrayList<TimerModel>) TimerDAO.getAllTimersForUser(user.getId(), todos.get(selectedPos).getTodoId());
+        System.out.println(timers);
         SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
         Map<String, Long> entries = new Hashtable();
 

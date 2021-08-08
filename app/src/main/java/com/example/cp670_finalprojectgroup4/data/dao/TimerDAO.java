@@ -37,8 +37,8 @@ public class TimerDAO {
                 newTimer.setTimerId(resultSet.getInt(1));
                 newTimer.setUserId(resultSet.getInt(2));
                 newTimer.setTodoId(resultSet.getInt(3));
-                newTimer.setStartTime(resultSet.getDate(4));
-                newTimer.setEndTime(resultSet.getDate(4));
+                newTimer.setStartTime(resultSet.getTimestamp(4));
+                newTimer.setEndTime(resultSet.getTimestamp(4));
                 timers.add(newTimer);
             }
             return timers;
@@ -59,8 +59,8 @@ public class TimerDAO {
                 newTimer.setTimerId(resultSet.getInt(1));
                 newTimer.setUserId(resultSet.getInt(2));
                 newTimer.setTodoId(resultSet.getInt(3));
-                newTimer.setStartTime(resultSet.getDate(4));
-                newTimer.setEndTime(resultSet.getDate(5));
+                newTimer.setStartTime(resultSet.getTimestamp(4));
+                newTimer.setEndTime(resultSet.getTimestamp(5));
                 timers.add(newTimer);
             }
             return timers;
