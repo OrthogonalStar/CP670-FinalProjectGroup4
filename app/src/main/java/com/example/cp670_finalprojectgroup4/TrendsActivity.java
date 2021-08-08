@@ -90,6 +90,7 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
                 lineDataSet = new LineDataSet(lineEntries, "");
                 lineData = new LineData(lineDataSet);
                 lineChart.setData(lineData);
+                lineChart.setBackgroundColor(Color.WHITE);
                 lineChart.invalidate();
             }
         });
