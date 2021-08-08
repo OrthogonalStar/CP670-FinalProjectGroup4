@@ -254,10 +254,6 @@ public class TodolActivity extends AppCompatActivity {
                             return;
                         }
 
-                        //Tested
-                        Snackbar.make(findViewById(R.id.TodoList), description, Snackbar.LENGTH_SHORT)
-                                .setAction("Action", null).show();
-
                         Todo todo = new Todo();
                         todo.title = title;
                         todo.description = description;

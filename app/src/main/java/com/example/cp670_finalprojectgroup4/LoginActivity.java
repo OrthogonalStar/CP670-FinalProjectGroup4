@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("pref_pass",password.getText().toString());
                         editor.putBoolean("pref_rememberMe",boolIsChecked);
                         editor.commit();
-                        Toast.makeText(getApplicationContext(),"Login is saved!",Toast.LENGTH_SHORT).show();
 
                     }else
                         mPrefs.edit().clear().commit();
